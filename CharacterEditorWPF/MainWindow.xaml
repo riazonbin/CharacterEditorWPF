@@ -17,22 +17,22 @@
         <Label x:Name="label_strength" Content="Strength" HorizontalAlignment="Left" Margin="75,101,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_strength" HorizontalAlignment="Left" Margin="80,132,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
         <Button x:Name="btn_increaseStrength" Content="+" HorizontalAlignment="Left" Margin="130,128,0,0" VerticalAlignment="Top" Width="20" Click="btn_increaseStrength_Click"/>
-        <Button x:Name="btn_decreaseStrength" Content="-" HorizontalAlignment="Left" Margin="55,128,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btn_decreaseStrength" Content="-" HorizontalAlignment="Left" Margin="55,128,0,0" VerticalAlignment="Top" Width="20" Click="btn_decreaseStrength_Click"/>
 
         <Label x:Name="label_dexterity" Content="Dexterity" HorizontalAlignment="Left" Margin="75,161,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_dexterity" HorizontalAlignment="Left" Margin="80,192,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
         <Button x:Name="btn_increaseDexterity" Content="+" HorizontalAlignment="Left" Margin="130,188,0,0" VerticalAlignment="Top" Width="20" Click="btn_increaseDexterity_Click"/>
-        <Button x:Name="btn_decreaseDexterity" Content="-" HorizontalAlignment="Left" Margin="55,188,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btn_decreaseDexterity" Content="-" HorizontalAlignment="Left" Margin="55,188,0,0" VerticalAlignment="Top" Width="20" Click="btn_decreaseDexterity_Click"/>
 
         <Label x:Name="label_constitution" Content="Constitution" HorizontalAlignment="Left" Margin="65,221,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_constitution" HorizontalAlignment="Left" Margin="80,252,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
         <Button x:Name="btn_increaseConstitution" Content="+" HorizontalAlignment="Left" Margin="130,248,0,0" VerticalAlignment="Top" Width="20" Click="btn_increaseConstitution_Click"/>
-        <Button x:Name="btn_decreaseConstitution" Content="-" HorizontalAlignment="Left" Margin="55,248,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btn_decreaseConstitution" Content="-" HorizontalAlignment="Left" Margin="55,248,0,0" VerticalAlignment="Top" Width="20" Click="btn_decreaseConstitution_Click"/>
 
         <Label x:Name="label_intelligence" Content="Intelligence" HorizontalAlignment="Left" Margin="67,281,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_intelligence" HorizontalAlignment="Left" Margin="80,312,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
         <Button x:Name="btn_increaseIntelligence" Content="+" HorizontalAlignment="Left" Margin="130,308,0,0" VerticalAlignment="Top" Width="20" Click="btn_increaseIntelligence_Click"/>
-        <Button x:Name="btn_decreaseIntelligence" Content="-" HorizontalAlignment="Left" Margin="55,308,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btn_decreaseIntelligence" Content="-" HorizontalAlignment="Left" Margin="55,308,0,0" VerticalAlignment="Top" Width="20" Click="btn_decreaseIntelligence_Click"/>
 
         <Label x:Name="label_HP" Content="HP:" HorizontalAlignment="Left" Margin="205,133,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_HP" HorizontalAlignment="Left" Margin="235,138,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>

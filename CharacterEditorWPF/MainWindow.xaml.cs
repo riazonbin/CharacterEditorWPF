@@ -122,5 +122,45 @@ namespace CharacterEditorWPF
             }
             return true;
         }
+
+        private void btn_decreaseStrength_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckCharactOnExistment())
+            {
+                return;
+            }
+            currentCharacter.Strength--;
+            FillData(currentCharacter);
+        }
+
+        private void btn_decreaseDexterity_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckCharactOnExistment())
+            {
+                return;
+            }
+            currentCharacter.Dexterity--;
+            FillData(currentCharacter);
+        }
+
+        private void btn_decreaseConstitution_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckCharactOnExistment())
+            {
+                return;
+            }
+            currentCharacter.Constitution--;
+            FillData(currentCharacter);
+        }
+
+        private void btn_decreaseIntelligence_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckCharactOnExistment())
+            {
+                return;
+            }
+            currentCharacter.Intelligence--;
+            FillData(currentCharacter);
+        }
     }
 }
