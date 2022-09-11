@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CharacterEditorWPF"
         mc:Ignorable="d"
-        Title="Character editor" Height="450" Width="800">
+        Title="Character editor" Height="650" Width="800">
     <Grid>
-        <ComboBox x:Name="cb_chooseCharact" HorizontalAlignment="Left" Margin="145,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_chooseCharact_SelectionChanged" >
+        <ComboBox x:Name="cb_chooseCharact" HorizontalAlignment="Left" Margin="145,75,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_chooseCharact_SelectionChanged" >
             <ComboBoxItem Content="Warrior"/>
             <ComboBoxItem Content="Rogue"/>
             <ComboBoxItem Content="Wizard"/>
         </ComboBox>
-        <Label x:Name="label_chooseCharacter" Content="Choose class of figther" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_chooseCharacter" Content="Choose class of figther" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
 
         <Label x:Name="label_strength" Content="Strength" HorizontalAlignment="Left" Margin="75,101,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_strength" HorizontalAlignment="Left" Margin="80,132,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
@@ -48,8 +48,11 @@
 
         <Label x:Name="label_physicalDef" Content="Physical def. :" HorizontalAlignment="Left" Margin="205,247,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_physicalDef" HorizontalAlignment="Left" Margin="285,252,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+        
         <TextBox x:Name="textbox_existingCharacters" HorizontalAlignment="Left" Margin="346,101,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="431" Height="235" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+        
         <Button x:Name="button_addCharacter" Content="Add" HorizontalAlignment="Left" Margin="56,344,0,0" VerticalAlignment="Top" Height="48" Width="96" Click="button_addCharacter_Click"/>
-
+        <Button x:Name="btn_save" Content="Save" HorizontalAlignment="Left" Margin="346,348,0,0" VerticalAlignment="Top" Height="29" Width="57" Click="btn_save_Click"/>
+        <Button x:Name="btn_load" Content="Load" HorizontalAlignment="Left" Margin="421,348,0,0" VerticalAlignment="Top" Height="29" Width="57" Click="btn_load_Click"/>
     </Grid>
 </Window>

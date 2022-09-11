@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,7 +25,7 @@ namespace CharacterEditorWPF
     public partial class MainWindow : Window
     {
         public Character currentCharacter;
-        List<Character> charactersList = new List<Character>();
+        static List<Character> charactersList = new List<Character>();
         public MainWindow()
         {
             InitializeComponent();
@@ -33,10 +35,10 @@ namespace CharacterEditorWPF
         {
             ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
             string? value = typeItem.Content.ToString();
-            switch(value)
+            switch (value)
             {
                 case "Warrior":
-                    Warrior newWarrior =  new Warrior();
+                    Warrior newWarrior = new Warrior();
                     currentCharacter = newWarrior;
                     FillData(newWarrior);
                     break;
@@ -73,7 +75,7 @@ namespace CharacterEditorWPF
 
         private void btn_increaseStrength_Click(object sender, RoutedEventArgs e)
         {
-            if(!CheckCharactOnExistment())
+            if (!CheckCharactOnExistment())
             {
                 return;
             }
@@ -181,14 +183,66 @@ namespace CharacterEditorWPF
         {
             textbox_existingCharacters.Text = "";
 
-            foreach(Character character in charactersList)
+            foreach (Character character in charactersList)
             {
-                textbox_existingCharacters.Text +=  
+                textbox_existingCharacters.Text +=
                     $"{character.GetType().Name} Strength: {character.Strength} " +
                     $"Dexterity: {character.Dexterity} Constitution: {character.Constitution} " +
                     $"Intelligence: {character.Intelligence}";
                 textbox_existingCharacters.Text += System.Environment.NewLine;
 
+            }
+        }
+
+        private void btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Characters"; 
+            dlg.DefaultExt = ".txt"; 
+            dlg.Filter = "Text documents (.txt)|*.txt"; 
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                Save(filename);
+            }
+        }
+
+        public static void Save(string path)
+        {
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(fileStream, charactersList);
+            }
+        }
+
+        public static void Load(string path)
+        {
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                charactersList = (List<Character>)binaryFormatter.Deserialize(fileStream);
+            }
+        }
+
+        private void btn_load_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "Text documents (.txt)|*.txt";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                Load(filename);
+                FillTextInfoAboutCharacters();
             }
         }
     }

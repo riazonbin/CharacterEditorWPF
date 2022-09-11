@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CharacterEditorCore
 {
+    [Serializable]
     public class Rogue : Character
     {
         public Rogue()

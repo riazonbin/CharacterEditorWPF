@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CharacterEditorCore
 {
+    [Serializable]
     public abstract class Character
     {
         protected int strength;
