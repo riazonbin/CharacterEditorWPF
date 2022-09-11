@@ -14,10 +14,17 @@ namespace CharacterEditorCore
         protected int intelligence;
         protected int availablePoints;
 
-        protected double manaPoints;
-        protected double healthPoints;
-        protected double attack;
-        protected double physicalDefense;
-        protected double magicAttack;
+        public double manaPoints;
+        public double healthPoints;
+        public double attack;
+        public double physicalDefense;
+        public double magicAttack;
+
+        public virtual int Strength { get; set; }
+        public virtual int Dexterity { get; set; }
+        public virtual int Constitution { get; set; }
+        public virtual int Intelligence { get; set; }
+
+
     }
 }

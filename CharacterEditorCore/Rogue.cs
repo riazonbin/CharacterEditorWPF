@@ -8,14 +8,14 @@ namespace CharacterEditorCore
 {
     public class Rogue : Character
     {
-        public Rogue(int strength, int dexterity, int constitution, int intelligence)
+        public Rogue()
         {
-            Strength = strength;
-            Dexterity = dexterity;
-            Constitution = constitution;
-            Intelligence = intelligence;
+            Strength = (int)Enums.RogueStats.minStrength;
+            Dexterity = (int)Enums.RogueStats.minDexterity;
+            Constitution = (int)Enums.RogueStats.minConstitution;
+            Intelligence = (int)Enums.RogueStats.minIntelligence;
         }
-        public int Strength 
+        public override int Strength 
         { 
             get { return strength; } 
             set
@@ -31,12 +31,12 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Dexterity
+        public override int Dexterity
         {
             get { return dexterity; }
             set
             {
-                if (value >(int)Enums.RogueStats.minDexterity &&
+                if (value >=(int)Enums.RogueStats.minDexterity &&
                     value <= (int)Enums.RogueStats.maxDexterity)
                 {
                     attack += (value - dexterity) * 4;
@@ -47,7 +47,7 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Constitution
+        public override int Constitution
         {
             get { return constitution; }
             set
@@ -62,7 +62,7 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Intelligence
+        public override int Intelligence
         {
             get { return intelligence; }
             set

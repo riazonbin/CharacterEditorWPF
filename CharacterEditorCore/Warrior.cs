@@ -8,15 +8,15 @@ namespace CharacterEditorCore
 {
     public class Warrior : Character
     {
-        public Warrior(int strength, int dexterity, int constitution, int intelligence)
+        public Warrior()
         {
-            Strength = strength;
-            Dexterity = dexterity;
-            Constitution = constitution;
-            Intelligence = intelligence;
+            Strength = (int)Enums.WarriorStats.minStrength;
+            Dexterity = (int)Enums.WarriorStats.minDexterity;
+            Constitution = (int)Enums.WarriorStats.minConstitution;
+            Intelligence = (int)Enums.WarriorStats.minIntelligence;
         }
 
-        public int Strength
+        public override int Strength
         {
             get { return strength; }
             set
@@ -32,7 +32,7 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Dexterity
+        public override int Dexterity
         {
             get { return dexterity; }
             set
@@ -48,7 +48,7 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Constitution
+        public override int Constitution
         {
             get { return constitution; }
             set
@@ -64,7 +64,7 @@ namespace CharacterEditorCore
             }
         }
 
-        public int Intelligence
+        public override int Intelligence
         {
             get { return intelligence; }
             set
