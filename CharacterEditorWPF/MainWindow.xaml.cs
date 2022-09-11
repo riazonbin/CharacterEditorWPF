@@ -23,6 +23,7 @@ namespace CharacterEditorWPF
     public partial class MainWindow : Window
     {
         public Character currentCharacter;
+        List<Character> charactersList = new List<Character>();
         public MainWindow()
         {
             InitializeComponent();
@@ -161,6 +162,34 @@ namespace CharacterEditorWPF
             }
             currentCharacter.Intelligence--;
             FillData(currentCharacter);
+        }
+
+        private void button_addCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                charactersList.Add(currentCharacter);
+                FillTextInfoAboutCharacters();
+            }
+            catch
+            {
+                MessageBox.Show("You have to choose type of character!");
+            }
+
+        }
+        private void FillTextInfoAboutCharacters()
+        {
+            textbox_existingCharacters.Text = "";
+
+            foreach(Character character in charactersList)
+            {
+                textbox_existingCharacters.Text +=  
+                    $"{character.GetType().Name} Strength: {character.Strength} " +
+                    $"Dexterity: {character.Dexterity} Constitution: {character.Constitution} " +
+                    $"Intelligence: {character.Intelligence}";
+                textbox_existingCharacters.Text += System.Environment.NewLine;
+
+            }
         }
     }
 }

@@ -24,7 +24,5 @@ namespace CharacterEditorCore
         public virtual int Dexterity { get; set; }
         public virtual int Constitution { get; set; }
         public virtual int Intelligence { get; set; }
-
-
     }
 }
