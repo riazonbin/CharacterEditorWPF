@@ -52,6 +52,6 @@
         </Button>
         <Label x:Name="label_name" Content="Name:" HorizontalAlignment="Left" Margin="55,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.04"/>
         <TextBox x:Name="tb_name" HorizontalAlignment="Left" Margin="104,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" LostFocus="tb_name_LostFocus"/>
-        <DataGrid x:Name="dg_createdCharacters" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="325,142,10,263" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+        <ListBox x:Name="listbox_createdCharacters" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="346,178,104,320"/>
     </Grid>
 </Window>

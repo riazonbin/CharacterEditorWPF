@@ -1,6 +1,4 @@
 ﻿using CharacterEditorCore;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,36 +33,29 @@ namespace CharacterEditorWPF
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
+            string? value = typeItem.Content.ToString();
+            switch (value)
             {
-                ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
-                string? value = typeItem.Content.ToString();
-                switch (value)
-                {
-                    case "Warrior":
-                        Warrior newWarrior = new Warrior();
-                        currentCharacter = newWarrior;
-                        FillData(newWarrior);
-                        break;
+                case "Warrior":
+                    Warrior newWarrior = new Warrior();
+                    currentCharacter = newWarrior;
+                    FillData(newWarrior);
+                    break;
 
-                    case "Rogue":
-                        Rogue newRogue = new Rogue();
-                        currentCharacter = newRogue;
-                        FillData(newRogue);
-                        break;
+                case "Rogue":
+                    Rogue newRogue = new Rogue();
+                    currentCharacter = newRogue;
+                    FillData(newRogue);
+                    break;
 
 
-                    case "Wizard":
-                        Wizard newWizard = new Wizard();
-                        currentCharacter = newWizard;
-                        FillData(newWizard);
-                        break;
-                }
-                MongoDBLink.MongoDB.FindByName("war1");
-
+                case "Wizard":
+                    Wizard newWizard = new Wizard();
+                    currentCharacter = newWizard;
+                    FillData(newWizard);
+                    break;
             }
-            catch
-            { }
         }
 
         public void FillData(Character newCharacter)
@@ -186,8 +177,6 @@ namespace CharacterEditorWPF
                 }
                 charactersList.Add(currentCharacter);
                 MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
-
-                ClearFields();
             }
             catch
             {
@@ -254,41 +243,6 @@ namespace CharacterEditorWPF
         private void tb_name_LostFocus(object sender, RoutedEventArgs e)
         {
             currentCharacter.Name = tb_name.Text;
-        }
-
-        public async Task FillListBox()
-        {
-            var collection = MongoDBLink.MongoDB.GetCollection();
-
-            //Method 1
-            using (var cursor = await collection.Find(new BsonDocument()).ToCursorAsync())
-            {
-                while (await cursor.MoveNextAsync())
-                {
-                    foreach (var doc in cursor.Current)
-                    {
-                        dg_createdCharacters.Items.Add(doc);
-                    }
-                }
-            }
-        }
-
-        public void ClearFields()
-        {
-            cb_chooseCharact.SelectedIndex = -1;
-
-            tb_name.Text = "";
-
-            tb_strength.Text = "0";
-            tb_dexterity.Text = "0";
-            tb_constitution.Text = "0";
-            tb_intelligence.Text = "0";
-
-            tb_HP.Text = "0";
-            tb_MP.Text = "0";
-            tb_attack.Text = "0";
-            tb_magicAttack.Text = "0";
-            tb_physicalDef.Text = "0";
         }
     }
 }
