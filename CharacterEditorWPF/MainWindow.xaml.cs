@@ -170,8 +170,13 @@ namespace CharacterEditorWPF
         {
             try
             {
+                if(currentCharacter.Name == "")
+                {
+                    MessageBox.Show("You have to give name to character!");
+                    return;
+                }
                 charactersList.Add(currentCharacter);
-                FillTextInfoAboutCharacters();
+                MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
             }
             catch
             {
@@ -181,17 +186,6 @@ namespace CharacterEditorWPF
         }
         private void FillTextInfoAboutCharacters()
         {
-            textbox_existingCharacters.Text = "";
-
-            foreach (Character character in charactersList)
-            {
-                textbox_existingCharacters.Text +=
-                    $"{character.GetType().Name} Strength: {character.Strength} " +
-                    $"Dexterity: {character.Dexterity} Constitution: {character.Constitution} " +
-                    $"Intelligence: {character.Intelligence}";
-                textbox_existingCharacters.Text += System.Environment.NewLine;
-
-            }
         }
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
@@ -244,6 +238,11 @@ namespace CharacterEditorWPF
                 Load(filename);
                 FillTextInfoAboutCharacters();
             }
+        }
+
+        private void tb_name_LostFocus(object sender, RoutedEventArgs e)
+        {
+            currentCharacter.Name = tb_name.Text;
         }
     }
 }

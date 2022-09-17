@@ -9,6 +9,10 @@ namespace CharacterEditorCore
     [Serializable]
     public abstract class Character
     {
+        public string Name { get; set; } = "";
+
+        public static List<Character> charactersList = new List<Character>();
+
         protected int strength;
         protected int dexterity;
         protected int constitution;
