@@ -28,7 +28,7 @@ namespace CharacterEditorWPF
     {
         public Character currentCharacter;
         static List<Character> charactersList = new List<Character>();
-        public string _lastSelectedType;
+        public bool isCharacterSelected;
 
         public MainWindow()
         {
@@ -38,6 +38,10 @@ namespace CharacterEditorWPF
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(cb_chooseCharact.SelectedIndex == -1)
+            {
+                return;
+            }
+            if(isCharacterSelected)
             {
                 return;
             }
@@ -81,6 +85,24 @@ namespace CharacterEditorWPF
             tb_attack.Text = newCharacter.attack.ToString();
             tb_magicAttack.Text = newCharacter.magicAttack.ToString();
             tb_physicalDef.Text = newCharacter.physicalDefense.ToString();
+        }
+
+        private void ClearData()
+        {
+            cb_chooseCharact.SelectedIndex = -1;
+
+            tb_name.Text = "";
+
+            tb_strength.Text = "0";
+            tb_dexterity.Text = "0";
+            tb_constitution.Text = "0";
+            tb_intelligence.Text = "0";
+
+            tb_HP.Text = "0";
+            tb_MP.Text = "0";
+            tb_attack.Text = "0";
+            tb_magicAttack.Text = "0";
+            tb_physicalDef.Text = "0";
         }
 
         private void btn_increaseStrength_Click(object sender, RoutedEventArgs e)
@@ -188,6 +210,7 @@ namespace CharacterEditorWPF
                 charactersList.Add(currentCharacter);
                 MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
                 FillListBox();
+                ClearData();
             }
             catch
             {
@@ -235,12 +258,30 @@ namespace CharacterEditorWPF
 
         private void cb_createdCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var unit = MongoDBLink.MongoDB.FindByName(e.AddedItems[0].ToString());
+            try
+            {
+                var unit = MongoDBLink.MongoDB.FindByName(e.AddedItems[0].ToString());
 
-            currentCharacter = unit;
+                currentCharacter = unit;
+                isCharacterSelected = true;
 
-            FillData(currentCharacter);
-            tb_name.Text = currentCharacter.Name;
+                FillData(currentCharacter);
+                tb_name.Text = currentCharacter.Name;
+                SetTypeForSelectedCharacter();
+
+                isCharacterSelected = false;
+            }
+            catch { };
+        }
+
+        private void SetTypeForSelectedCharacter()
+        {
+            cb_chooseCharact.Text = currentCharacter.typeOfCharacter;
+        }
+
+        private void btn_clear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearData();
         }
     }
 }

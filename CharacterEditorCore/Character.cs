@@ -13,6 +13,8 @@ namespace CharacterEditorCore
 
         public ObjectId _id;
 
+        public string typeOfCharacter;
+
 
         protected int strength;
         protected int dexterity;

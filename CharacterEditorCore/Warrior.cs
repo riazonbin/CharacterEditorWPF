@@ -14,6 +14,7 @@ namespace CharacterEditorCore
             Dexterity = (int)Enums.WarriorStats.minDexterity;
             Constitution = (int)Enums.WarriorStats.minConstitution;
             Intelligence = (int)Enums.WarriorStats.minIntelligence;
+            typeOfCharacter = "Warrior";
         }
 
         public override int Strength
