@@ -22,9 +22,10 @@ namespace MongoDBLink
         public static Character FindByName(string name)
         {
             var client = new MongoClient("mongodb://localhost");
+            var filter = new BsonDocument("Name", name);
             var database = client.GetDatabase("CharacterEditorZaripov");
             var collection = database.GetCollection<Character>("CharactersCollection");
-            return collection.Find(x => x.Name == name).FirstOrDefault();
+            return collection.Find(filter).FirstOrDefault();
         }
 
 

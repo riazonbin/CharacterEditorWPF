@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace CharacterEditorCore
 {
     public class Character
     {
-        public string Name { get; set; } = "";
+        public string Name { get; set; }
 
         public ObjectId _id;
 
@@ -32,5 +34,13 @@ namespace CharacterEditorCore
         public virtual int Dexterity { get; set; }
         public virtual int Constitution { get; set; }
         public virtual int Intelligence { get; set; }
+
+        //changed line
+        [BsonElement("Properties")]
+        public BsonDocument Properties { get; set; }
+
+        //changed line
+        [BsonElement("Exception")]
+        public BsonDocument Exception { get; set; }
     }
 }

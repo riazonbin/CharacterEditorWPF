@@ -1,5 +1,6 @@
 ﻿using CharacterEditorCore;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,16 @@ namespace CharacterEditorWPF
     public partial class MainWindow : Window
     {
         public Character currentCharacter;
-        static List<Character> charactersList = new List<Character>();
         public bool isCharacterSelected;
+        public bool isClearingData;
 
         public MainWindow()
         {
             InitializeComponent();
+            BsonClassMap.RegisterClassMap<Character>();
+            BsonClassMap.RegisterClassMap<Wizard>();
+            BsonClassMap.RegisterClassMap<Rogue>();
+            BsonClassMap.RegisterClassMap<Warrior>();
         }
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,6 +94,8 @@ namespace CharacterEditorWPF
 
         private void ClearData()
         {
+            isClearingData = true;
+
             cb_chooseCharact.SelectedIndex = -1;
             cb_createdCharacters.SelectedIndex = -1;
 
@@ -106,6 +113,7 @@ namespace CharacterEditorWPF
             tb_physicalDef.Text = "0";
 
             currentCharacter = null;
+            isClearingData = false;
         }
 
         private void btn_increaseStrength_Click(object sender, RoutedEventArgs e)
@@ -210,7 +218,6 @@ namespace CharacterEditorWPF
                     MessageBox.Show("You have to give name to character!");
                     return;
                 }
-                charactersList.Add(currentCharacter);
                 MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
                 FillListBox();
                 ClearData();
@@ -261,9 +268,14 @@ namespace CharacterEditorWPF
 
         private void cb_createdCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(isClearingData)
+            {
+                return;
+            }
+
             try
             {
-                var unit = MongoDBLink.MongoDB.FindByName(e.AddedItems[0].ToString());
+                var unit = MongoDBLink.MongoDB.FindByName(cb_createdCharacters.SelectedItem.ToString());
 
                 SetDataForSelectedCharacter(unit);
                 isCharacterSelected = true;
@@ -271,7 +283,7 @@ namespace CharacterEditorWPF
                 SetTypeForSelectedCharacter();
                 isCharacterSelected = false;
             }
-            catch { };
+            catch {};
         }
 
         private void SetTypeForSelectedCharacter()
