@@ -16,6 +16,17 @@ namespace CharacterEditorCore
             Intelligence = (int)Enums.RogueStats.minIntelligence;
             typeOfCharacter = "Rogue";
         }
+
+        public Rogue(int strength, int dexterity, int constitution, int intelligence, string name)
+        {
+            Strength = strength;
+            Dexterity = dexterity;
+            Constitution = constitution;
+            Intelligence = intelligence;
+            Name = name;
+            typeOfCharacter = "Rogue";
+        }
+
         public override int Strength 
         { 
             get { return strength; } 

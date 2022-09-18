@@ -90,6 +90,7 @@ namespace CharacterEditorWPF
         private void ClearData()
         {
             cb_chooseCharact.SelectedIndex = -1;
+            cb_createdCharacters.SelectedIndex = -1;
 
             tb_name.Text = "";
 
@@ -103,6 +104,8 @@ namespace CharacterEditorWPF
             tb_attack.Text = "0";
             tb_magicAttack.Text = "0";
             tb_physicalDef.Text = "0";
+
+            currentCharacter = null;
         }
 
         private void btn_increaseStrength_Click(object sender, RoutedEventArgs e)
@@ -262,13 +265,10 @@ namespace CharacterEditorWPF
             {
                 var unit = MongoDBLink.MongoDB.FindByName(e.AddedItems[0].ToString());
 
-                currentCharacter = unit;
+                SetDataForSelectedCharacter(unit);
                 isCharacterSelected = true;
-
-                FillData(currentCharacter);
                 tb_name.Text = currentCharacter.Name;
                 SetTypeForSelectedCharacter();
-
                 isCharacterSelected = false;
             }
             catch { };
@@ -282,6 +282,36 @@ namespace CharacterEditorWPF
         private void btn_clear_Click(object sender, RoutedEventArgs e)
         {
             ClearData();
+        }
+        private void SetDataForSelectedCharacter(Character unit)
+        {
+            switch (unit.typeOfCharacter)
+            {
+                case "Warrior":
+                    Warrior newWarrior = new Warrior(unit.Strength, unit.Dexterity, 
+                        unit.Constitution, unit.Intelligence, unit.Name);
+
+                    currentCharacter = newWarrior;
+                    FillData(newWarrior);
+                    break;
+
+                case "Rogue":
+                    Rogue newRogue = new Rogue(unit.Strength, unit.Dexterity,
+                        unit.Constitution, unit.Intelligence, unit.Name);
+
+                    currentCharacter = newRogue;
+                    FillData(newRogue);
+                    break;
+
+
+                case "Wizard":
+                    Wizard newWizard = new Wizard(unit.Strength, unit.Dexterity,
+                        unit.Constitution, unit.Intelligence, unit.Name);
+
+                    currentCharacter = newWizard;
+                    FillData(newWizard);
+                    break;
+            }
         }
     }
 }

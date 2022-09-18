@@ -17,6 +17,16 @@ namespace CharacterEditorCore
             typeOfCharacter = "Warrior";
         }
 
+        public Warrior(int strength, int dexterity, int constitution, int intelligence, string name)
+        {
+            Strength = strength;
+            Dexterity = dexterity;
+            Constitution = constitution;
+            Intelligence = intelligence;
+            Name = name;
+            typeOfCharacter = "Warrior";
+        }
+
         public override int Strength
         {
             get { return strength; }
