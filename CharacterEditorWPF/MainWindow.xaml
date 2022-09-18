@@ -7,7 +7,7 @@
         xmlns:VisualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" x:Class="CharacterEditorWPF.MainWindow"
         mc:Ignorable="d"
         Title="Character editor" Height="650" Width="800">
-    <Grid>
+    <Grid x:Name="form_mainForm" Loaded="form_mainForm_Loaded">
         <ComboBox x:Name="cb_chooseCharact" HorizontalAlignment="Left" Margin="145,75,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_chooseCharact_SelectionChanged" >
             <ComboBoxItem Content="Warrior"/>
             <ComboBoxItem Content="Rogue"/>
@@ -52,6 +52,7 @@
         </Button>
         <Label x:Name="label_name" Content="Name:" HorizontalAlignment="Left" Margin="55,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.04"/>
         <TextBox x:Name="tb_name" HorizontalAlignment="Left" Margin="104,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" LostFocus="tb_name_LostFocus"/>
-        <ListBox x:Name="listbox_createdCharacters" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="346,178,104,320"/>
+        <ComboBox x:Name="cb_createdCharacters" HorizontalAlignment="Left" Margin="549,144,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_createdCharacters_SelectionChanged"/>
+        <Label x:Name="label_createdCharacters" Content="Created characters" HorizontalAlignment="Left" Margin="549,113,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CharacterEditorCore
 {
-    [Serializable]
     public class Wizard : Character
     {
         public Wizard()

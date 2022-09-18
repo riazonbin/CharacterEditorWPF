@@ -1,4 +1,5 @@
 ﻿using CharacterEditorCore;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,20 @@ namespace MongoDBLink
             collection.InsertOne(character);
         }
 
-        public static void FindByName(string name)
+        public static Character FindByName(string name)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CharacterEditorZaripov");
-            var collection = database.GetCollection<Character>("ExCollection");
-            var unit = collection.Find(x => x.Name == name).FirstOrDefault();
+            var collection = database.GetCollection<Character>("CharactersCollection");
+            return collection.Find(x => x.Name == name).FirstOrDefault();
+        }
+
+
+        public static IMongoCollection<BsonDocument> GetCollection()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CharacterEditorZaripov");
+            return  database.GetCollection<BsonDocument>("CharactersCollection");
         }
     }
 }

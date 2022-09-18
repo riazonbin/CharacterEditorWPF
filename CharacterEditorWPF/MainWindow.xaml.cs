@@ -1,4 +1,6 @@
 ﻿using CharacterEditorCore;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,6 +28,8 @@ namespace CharacterEditorWPF
     {
         public Character currentCharacter;
         static List<Character> charactersList = new List<Character>();
+        public string _lastSelectedType;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +37,12 @@ namespace CharacterEditorWPF
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(cb_chooseCharact.SelectedIndex == -1)
+            {
+                return;
+            }
+
+
             ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
             string? value = typeItem.Content.ToString();
             switch (value)
@@ -177,6 +187,7 @@ namespace CharacterEditorWPF
                 }
                 charactersList.Add(currentCharacter);
                 MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
+                FillListBox();
             }
             catch
             {
@@ -184,65 +195,52 @@ namespace CharacterEditorWPF
             }
 
         }
-        private void FillTextInfoAboutCharacters()
+
+        private async void FillListBox()
         {
-        }
-
-        private void btn_save_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Characters"; 
-            dlg.DefaultExt = ".txt"; 
-            dlg.Filter = "Text documents (.txt)|*.txt"; 
-
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (result == true)
+            if(cb_createdCharacters.Items.Count != 0)
             {
-                // Save document
-                string filename = dlg.FileName;
-                Save(filename);
+                cb_createdCharacters.Items.Clear();
             }
-        }
 
-        public static void Save(string path)
-        {
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
+            var collection = MongoDBLink.MongoDB.GetCollection();
+            var filter = new BsonDocument();
+            using (var cursor = await collection.FindAsync(filter))
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(fileStream, charactersList);
-            }
-        }
+                while (await cursor.MoveNextAsync())
+                {
+                    var docs = cursor.Current;
+                    foreach (var doc in docs)
+                    {
+                        cb_createdCharacters.Items.Add(doc.GetElement("Name").Value);
 
-        public static void Load(string path)
-        {
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                charactersList = (List<Character>)binaryFormatter.Deserialize(fileStream);
-            }
-        }
-
-        private void btn_load_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "Text documents (.txt)|*.txt";
-
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                // Save document
-                string filename = dlg.FileName;
-                Load(filename);
-                FillTextInfoAboutCharacters();
+                    }
+                }
             }
         }
 
         private void tb_name_LostFocus(object sender, RoutedEventArgs e)
         {
-            currentCharacter.Name = tb_name.Text;
+            try
+            {
+                currentCharacter.Name = tb_name.Text;
+            }
+            catch { }
+        }
+
+        private void form_mainForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            FillListBox();
+        }
+
+        private void cb_createdCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var unit = MongoDBLink.MongoDB.FindByName(e.AddedItems[0].ToString());
+
+            currentCharacter = unit;
+
+            FillData(currentCharacter);
+            tb_name.Text = currentCharacter.Name;
         }
     }
 }
