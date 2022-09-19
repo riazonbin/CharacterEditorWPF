@@ -22,7 +22,7 @@ namespace MongoDBLink
         public static Character FindById(string id)
         {
             var client = new MongoClient("mongodb://localhost");
-            var filter = new BsonDocument("_id", new ObjectId(id));
+            var filter = new BsonDocument("_id", ObjectId.Parse(id));
             var database = client.GetDatabase("CharacterEditorZaripov");
             var collection = database.GetCollection<Character>("CharactersCollection");
             return collection.Find(filter).FirstOrDefault();

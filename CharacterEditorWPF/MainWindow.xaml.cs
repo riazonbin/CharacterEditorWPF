@@ -30,6 +30,7 @@ namespace CharacterEditorWPF
         public Character currentCharacter;
         public bool isCharacterSelected;
         public bool isClearingData;
+        public bool isChangingType;
 
         public MainWindow()
         {
@@ -42,7 +43,10 @@ namespace CharacterEditorWPF
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cb_chooseCharact.SelectedIndex == -1)
+            isChangingType = true;
+            FillListBox();
+
+            if (cb_chooseCharact.SelectedIndex == -1)
             {
                 return;
             }
@@ -50,10 +54,11 @@ namespace CharacterEditorWPF
             {
                 return;
             }
-
+            isChangingType = false;
 
             ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
             string? value = typeItem.Content.ToString();
+
             switch (value)
             {
                 case "Warrior":
@@ -96,8 +101,9 @@ namespace CharacterEditorWPF
         {
             isClearingData = true;
 
-            cb_chooseCharact.SelectedIndex = -1;
             cb_createdCharacters.SelectedIndex = -1;
+            cb_createdCharacters.Items.Clear();
+            cb_chooseCharact.SelectedIndex = -1;
 
             tb_name.Text = "";
 
@@ -211,6 +217,7 @@ namespace CharacterEditorWPF
 
         private void button_addCharacter_Click(object sender, RoutedEventArgs e)
         {
+            currentCharacter.Name = tb_name.Text;
             try
             {
                 if(currentCharacter.Name == "")
@@ -237,20 +244,32 @@ namespace CharacterEditorWPF
                 cb_createdCharacters.Items.Clear();
             }
 
-            var collection = MongoDBLink.MongoDB.GetCollection();
-            var filter = new BsonDocument();
-            using (var cursor = await collection.FindAsync(filter))
+            if (cb_chooseCharact.SelectedItem is null)
             {
-                while (await cursor.MoveNextAsync())
-                {
-                    var docs = cursor.Current;
-                    foreach (var doc in docs)
-                    {
-                        cb_createdCharacters.Items.Add(doc);
+                return;
+            }
 
+            ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
+            string? type = typeItem.Content.ToString();
+
+            var collection = MongoDBLink.MongoDB.GetCollection();
+            try
+            {
+                var filter = new BsonDocument("_t", type);
+                using (var cursor = await collection.FindAsync(filter))
+                {
+                    while (await cursor.MoveNextAsync())
+                    {
+                        var docs = cursor.Current;
+                        foreach (var doc in docs)
+                        {
+                            cb_createdCharacters.Items.Add(doc);
+
+                        }
                     }
                 }
             }
+            catch { }
         }
 
         private void tb_name_LostFocus(object sender, RoutedEventArgs e)
@@ -264,12 +283,15 @@ namespace CharacterEditorWPF
 
         private void form_mainForm_Loaded(object sender, RoutedEventArgs e)
         {
-            FillListBox();
         }
 
         private void cb_createdCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(isClearingData)
+            {
+                return;
+            }
+            if (isChangingType)
             {
                 return;
             }
@@ -282,7 +304,6 @@ namespace CharacterEditorWPF
                 SetDataForSelectedCharacter(unit);
                 isCharacterSelected = true;
                 tb_name.Text = currentCharacter.Name;
-                SetTypeForSelectedCharacter();
                 isCharacterSelected = false;
             }
             catch {};
