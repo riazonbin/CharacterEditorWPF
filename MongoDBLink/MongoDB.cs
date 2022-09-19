@@ -19,21 +19,21 @@ namespace MongoDBLink
             collection.InsertOne(character);
         }
 
-        public static Character FindByName(string name)
+        public static Character FindById(string id)
         {
             var client = new MongoClient("mongodb://localhost");
-            var filter = new BsonDocument("Name", name);
+            var filter = new BsonDocument("_id", new ObjectId(id));
             var database = client.GetDatabase("CharacterEditorZaripov");
             var collection = database.GetCollection<Character>("CharactersCollection");
             return collection.Find(filter).FirstOrDefault();
         }
 
 
-        public static IMongoCollection<BsonDocument> GetCollection()
+        public static IMongoCollection<Character> GetCollection()
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CharacterEditorZaripov");
-            return  database.GetCollection<BsonDocument>("CharactersCollection");
+            return  database.GetCollection<Character>("CharactersCollection");
         }
     }
 }

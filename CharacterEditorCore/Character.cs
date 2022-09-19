@@ -42,5 +42,10 @@ namespace CharacterEditorCore
         //changed line
         [BsonElement("Exception")]
         public BsonDocument Exception { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} | {_id}";
+        }
     }
 }

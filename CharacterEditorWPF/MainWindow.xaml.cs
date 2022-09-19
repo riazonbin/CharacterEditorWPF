@@ -218,6 +218,7 @@ namespace CharacterEditorWPF
                     MessageBox.Show("You have to give name to character!");
                     return;
                 }
+
                 MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
                 FillListBox();
                 ClearData();
@@ -245,7 +246,7 @@ namespace CharacterEditorWPF
                     var docs = cursor.Current;
                     foreach (var doc in docs)
                     {
-                        cb_createdCharacters.Items.Add(doc.GetElement("Name").Value);
+                        cb_createdCharacters.Items.Add(doc);
 
                     }
                 }
@@ -275,7 +276,8 @@ namespace CharacterEditorWPF
 
             try
             {
-                var unit = MongoDBLink.MongoDB.FindByName(cb_createdCharacters.SelectedItem.ToString());
+                var unit = MongoDBLink.MongoDB.FindById(cb_createdCharacters.SelectedItem.ToString().
+                    Split('|')[1].Trim());
 
                 SetDataForSelectedCharacter(unit);
                 isCharacterSelected = true;
