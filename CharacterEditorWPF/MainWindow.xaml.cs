@@ -1,4 +1,5 @@
 ﻿using CharacterEditorCore;
+using CharacterEditorCore.Items;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -35,10 +36,22 @@ namespace CharacterEditorWPF
         public MainWindow()
         {
             InitializeComponent();
+            RegisterClassMaps();
+        }
+
+        private static void RegisterClassMaps()
+        {
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Wizard>();
             BsonClassMap.RegisterClassMap<Rogue>();
             BsonClassMap.RegisterClassMap<Warrior>();
+
+            BsonClassMap.RegisterClassMap<Axe>();
+            BsonClassMap.RegisterClassMap<Bow>();
+            BsonClassMap.RegisterClassMap<Crossbow>();
+            BsonClassMap.RegisterClassMap<Knife>();
+            BsonClassMap.RegisterClassMap<Wand>();
+            BsonClassMap.RegisterClassMap<Hammer>();
         }
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,6 +108,8 @@ namespace CharacterEditorWPF
             tb_attack.Text = newCharacter.attack.ToString();
             tb_magicAttack.Text = newCharacter.magicAttack.ToString();
             tb_physicalDef.Text = newCharacter.physicalDefense.ToString();
+
+            GetInventoryToListBox();
         }
 
         private void ClearData()
@@ -104,6 +119,8 @@ namespace CharacterEditorWPF
             cb_createdCharacters.SelectedIndex = -1;
             cb_createdCharacters.Items.Clear();
             cb_chooseCharact.SelectedIndex = -1;
+            cb_ChooseItem.SelectedIndex = -1;
+            lb_inventory.Items.Clear();
 
             tb_name.Text = "";
 
@@ -226,9 +243,16 @@ namespace CharacterEditorWPF
                     return;
                 }
 
-                MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
-                FillListBox();
+                if(MongoDBLink.MongoDB.FindById(currentCharacter._id.ToString()) is null)
+                {
+                    MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
+                }
+                else
+                {
+                    MongoDBLink.MongoDB.ReplaceOneInDataBase(currentCharacter);
+                }
                 ClearData();
+                FillListBox();
             }
             catch
             {
@@ -301,7 +325,9 @@ namespace CharacterEditorWPF
                 var unit = MongoDBLink.MongoDB.FindById(cb_createdCharacters.SelectedItem.ToString().
                     Split('|')[1].Trim());
 
-                SetDataForSelectedCharacter(unit);
+                currentCharacter = unit;
+
+                FillData(currentCharacter);
                 isCharacterSelected = true;
                 tb_name.Text = currentCharacter.Name;
                 isCharacterSelected = false;
@@ -320,32 +346,73 @@ namespace CharacterEditorWPF
         }
         private void SetDataForSelectedCharacter(Character unit)
         {
-            switch (unit.typeOfCharacter)
+        }
+
+        private void btn_AddItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(currentCharacter is null)
             {
-                case "Warrior":
-                    Warrior newWarrior = new Warrior(unit.Strength, unit.Dexterity, 
-                        unit.Constitution, unit.Intelligence, unit.Name);
+                return;
+            }
 
-                    currentCharacter = newWarrior;
-                    FillData(newWarrior);
+            if(currentCharacter.inventory.Count == currentCharacter.inventory.Capacity)
+            {
+                return;
+            }
+
+            if(cb_ChooseItem.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            ComboBoxItem cbi = (ComboBoxItem)cb_ChooseItem.SelectedItem;
+            string selectedText = cbi.Content.ToString();
+
+            switch (selectedText)
+            {
+                case "Wand":
+                    Wand wand = new Wand();
+                    currentCharacter.inventory.Add(wand);
                     break;
 
-                case "Rogue":
-                    Rogue newRogue = new Rogue(unit.Strength, unit.Dexterity,
-                        unit.Constitution, unit.Intelligence, unit.Name);
-
-                    currentCharacter = newRogue;
-                    FillData(newRogue);
+                case "Bow":
+                    Bow bow = new Bow();
+                    currentCharacter.inventory.Add(bow);
                     break;
 
-
-                case "Wizard":
-                    Wizard newWizard = new Wizard(unit.Strength, unit.Dexterity,
-                        unit.Constitution, unit.Intelligence, unit.Name);
-
-                    currentCharacter = newWizard;
-                    FillData(newWizard);
+                case "Crossbow":
+                    Crossbow crossbow = new Crossbow();
+                    currentCharacter.inventory.Add(crossbow);
                     break;
+
+                case "Hammer":
+                    Hammer hammer = new Hammer();
+                    currentCharacter.inventory.Add(hammer);
+                    break;
+
+                case "Knife":
+                    Knife knife = new Knife();
+                    currentCharacter.inventory.Add(knife);
+                    break;
+
+                case "Axe":
+                    Axe axe = new Axe();
+                    currentCharacter.inventory.Add(axe);
+                    break;
+            }
+
+            GetInventoryToListBox();
+
+
+        }
+
+        private void GetInventoryToListBox()
+        {
+            lb_inventory.Items.Clear();
+
+            foreach(var item in currentCharacter.inventory)
+            {
+                lb_inventory.Items.Add(item.Name);
             }
         }
     }

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CharacterEditorWPF"
-        xmlns:VisualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" x:Class="CharacterEditorWPF.MainWindow"
+        xmlns:VisualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" xmlns:Items="clr-namespace:CharacterEditorCore.Items;assembly=CharacterEditorCore" x:Class="CharacterEditorWPF.MainWindow"
         mc:Ignorable="d"
         Title="Character editor" Height="650" Width="800">
     <Grid x:Name="form_mainForm" Loaded="form_mainForm_Loaded">
@@ -55,5 +55,16 @@
         <ComboBox x:Name="cb_createdCharacters" HorizontalAlignment="Left" Margin="400,144,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_createdCharacters_SelectionChanged"/>
         <Label x:Name="label_createdCharacters" Content="Created characters" HorizontalAlignment="Left" Margin="400,113,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_clear" Content="Clear all fields" HorizontalAlignment="Left" Margin="558,131,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="btn_clear_Click"/>
+        <ListBox x:Name="lb_inventory" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="319,424,211,109"/>
+        <ComboBox x:Name="cb_ChooseItem" HorizontalAlignment="Left" Margin="469,390,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Axe"/>
+            <ComboBoxItem Content="Wand"/>
+            <ComboBoxItem Content="Hammer"/>
+            <ComboBoxItem Content="Knife"/>
+            <ComboBoxItem Content="Crossbow"/>
+            <ComboBoxItem Content="Bow"/>
+        </ComboBox>
+        <Label x:Name="lb_addItemToInventory" Content="Add item to inventory" HorizontalAlignment="Left" Margin="319,388,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_AddItem" Content="Add item" HorizontalAlignment="Left" Margin="606,392,0,0" VerticalAlignment="Top" Click="btn_AddItem_Click"/>
     </Grid>
 </Window>

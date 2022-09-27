@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using CharacterEditorCore.Items;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -17,6 +18,9 @@ namespace CharacterEditorCore
 
         public string typeOfCharacter;
 
+        [BsonIgnoreIfDefault]
+        public List<IItem> inventory = new List<IItem>(3);
+
 
         protected int strength;
         protected int dexterity;
@@ -34,14 +38,6 @@ namespace CharacterEditorCore
         public virtual int Dexterity { get; set; }
         public virtual int Constitution { get; set; }
         public virtual int Intelligence { get; set; }
-
-        //changed line
-        [BsonElement("Properties")]
-        public BsonDocument Properties { get; set; }
-
-        //changed line
-        [BsonElement("Exception")]
-        public BsonDocument Exception { get; set; }
 
         public override string ToString()
         {

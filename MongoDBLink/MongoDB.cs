@@ -19,6 +19,15 @@ namespace MongoDBLink
             collection.InsertOne(character);
         }
 
+        public static void ReplaceOneInDataBase(Character character)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CharacterEditorZaripov");
+            var filter = new BsonDocument("_id", character._id);
+            var collection = database.GetCollection<Character>("CharactersCollection");
+            collection.ReplaceOne(filter, character);
+        }
+
         public static Character FindById(string id)
         {
             var client = new MongoClient("mongodb://localhost");
