@@ -18,7 +18,7 @@ namespace CharacterEditorCore
             {
                 if (value > CurrentLevel * 1000)
                 {
-                    --CurrentLevel;
+                    ++CurrentLevel;
                 }
                 _currentExp = value;
 

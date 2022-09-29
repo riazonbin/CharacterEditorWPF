@@ -22,7 +22,7 @@ namespace CharacterEditorCore
         [BsonIgnoreIfDefault]
         public List<Item> inventory = new List<Item>();
 
-        public int listCapacity = -3;
+        public int listCapacity = 3;
 
 
         protected int strength;
