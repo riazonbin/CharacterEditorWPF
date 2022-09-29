@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Items
+namespace CharacterEditorCore
 {
-    public class Bow : IItem
+    public class Item
     {
-        public Bow()
-        {
-            Name = "Bow";
-        }
-
         public string Name { get; set; }
+
+        public Item(string name)
+        {
+            Name = name;
+        }
     }
 }

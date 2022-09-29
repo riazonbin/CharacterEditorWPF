@@ -1,5 +1,4 @@
-﻿using CharacterEditorCore.Items;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -13,13 +12,17 @@ namespace CharacterEditorCore
     public class Character
     {
         public string Name { get; set; }
+        
+        public Level Level { get; set; }
 
         public ObjectId _id;
 
         public string typeOfCharacter;
 
         [BsonIgnoreIfDefault]
-        public List<IItem> inventory = new List<IItem>(3);
+        public List<Item> inventory = new List<Item>();
+
+        public int listCapacity = -3;
 
 
         protected int strength;

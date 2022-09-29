@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CharacterEditorWPF"
-        xmlns:VisualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" xmlns:Items="clr-namespace:CharacterEditorCore.Items;assembly=CharacterEditorCore" x:Class="CharacterEditorWPF.MainWindow"
+        x:Class="CharacterEditorWPF.MainWindow"
         mc:Ignorable="d"
         Title="Character editor" Height="650" Width="800">
     <Grid x:Name="form_mainForm" Loaded="form_mainForm_Loaded">
@@ -52,19 +51,13 @@
         </Button>
         <Label x:Name="label_name" Content="Name:" HorizontalAlignment="Left" Margin="55,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.04"/>
         <TextBox x:Name="tb_name" HorizontalAlignment="Left" Margin="104,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" LostFocus="tb_name_LostFocus"/>
-        <ComboBox x:Name="cb_createdCharacters" HorizontalAlignment="Left" Margin="400,144,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_createdCharacters_SelectionChanged"/>
-        <Label x:Name="label_createdCharacters" Content="Created characters" HorizontalAlignment="Left" Margin="400,113,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_clear" Content="Clear all fields" HorizontalAlignment="Left" Margin="558,131,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="btn_clear_Click"/>
-        <ListBox x:Name="lb_inventory" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="319,424,211,109"/>
-        <ComboBox x:Name="cb_ChooseItem" HorizontalAlignment="Left" Margin="469,390,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="Axe"/>
-            <ComboBoxItem Content="Wand"/>
-            <ComboBoxItem Content="Hammer"/>
-            <ComboBoxItem Content="Knife"/>
-            <ComboBoxItem Content="Crossbow"/>
-            <ComboBoxItem Content="Bow"/>
-        </ComboBox>
-        <Label x:Name="lb_addItemToInventory" Content="Add item to inventory" HorizontalAlignment="Left" Margin="319,388,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_AddItem" Content="Add item" HorizontalAlignment="Left" Margin="606,392,0,0" VerticalAlignment="Top" Click="btn_AddItem_Click"/>
+        <ComboBox x:Name="cb_createdCharacters" HorizontalAlignment="Left" Margin="400,88,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_createdCharacters_SelectionChanged"/>
+        <Label x:Name="label_createdCharacters" Content="Created characters" HorizontalAlignment="Left" Margin="400,57,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_clear" Content="Clear all fields" HorizontalAlignment="Left" Margin="558,75,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="btn_clear_Click"/>
+
+        <ListBox x:Name="lb_inventory" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="431,477,99,56"/>
+        <Label x:Name="lb_addItemToInventory" Content="Add item to inventory" HorizontalAlignment="Left" Margin="431,441,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_AddItem" Content="Add item" HorizontalAlignment="Left" Margin="718,445,0,0" VerticalAlignment="Top" Click="btn_AddItem_Click"/>
+        <TextBox x:Name="tb_itemToInventory" HorizontalAlignment="Left" Margin="562,445,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="146" Height="22"/>
     </Grid>
 </Window>

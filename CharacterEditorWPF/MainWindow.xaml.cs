@@ -1,25 +1,10 @@
 ﻿using CharacterEditorCore;
-using CharacterEditorCore.Items;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CharacterEditorWPF
 {
@@ -45,13 +30,6 @@ namespace CharacterEditorWPF
             BsonClassMap.RegisterClassMap<Wizard>();
             BsonClassMap.RegisterClassMap<Rogue>();
             BsonClassMap.RegisterClassMap<Warrior>();
-
-            BsonClassMap.RegisterClassMap<Axe>();
-            BsonClassMap.RegisterClassMap<Bow>();
-            BsonClassMap.RegisterClassMap<Crossbow>();
-            BsonClassMap.RegisterClassMap<Knife>();
-            BsonClassMap.RegisterClassMap<Wand>();
-            BsonClassMap.RegisterClassMap<Hammer>();
         }
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -119,7 +97,7 @@ namespace CharacterEditorWPF
             cb_createdCharacters.SelectedIndex = -1;
             cb_createdCharacters.Items.Clear();
             cb_chooseCharact.SelectedIndex = -1;
-            cb_ChooseItem.SelectedIndex = -1;
+            tb_itemToInventory.Text = "";
             lb_inventory.Items.Clear();
 
             tb_name.Text = "";
@@ -234,10 +212,11 @@ namespace CharacterEditorWPF
 
         private void button_addCharacter_Click(object sender, RoutedEventArgs e)
         {
-            currentCharacter.Name = tb_name.Text;
             try
             {
-                if(currentCharacter.Name == "")
+                currentCharacter.Name = tb_name.Text;
+
+                if (currentCharacter.Name == "")
                 {
                     MessageBox.Show("You have to give name to character!");
                     return;
@@ -322,8 +301,7 @@ namespace CharacterEditorWPF
 
             try
             {
-                var unit = MongoDBLink.MongoDB.FindById(cb_createdCharacters.SelectedItem.ToString().
-                    Split('|')[1].Trim());
+                var unit = (Character)cb_createdCharacters.SelectedItem;
 
                 currentCharacter = unit;
 
@@ -355,51 +333,17 @@ namespace CharacterEditorWPF
                 return;
             }
 
-            if(currentCharacter.inventory.Count == currentCharacter.inventory.Capacity)
+            if(currentCharacter.inventory.Count == currentCharacter.listCapacity)
             {
                 return;
             }
 
-            if(cb_ChooseItem.SelectedIndex == -1)
+            if(tb_itemToInventory.Text is null)
             {
                 return;
             }
 
-            ComboBoxItem cbi = (ComboBoxItem)cb_ChooseItem.SelectedItem;
-            string selectedText = cbi.Content.ToString();
-
-            switch (selectedText)
-            {
-                case "Wand":
-                    Wand wand = new Wand();
-                    currentCharacter.inventory.Add(wand);
-                    break;
-
-                case "Bow":
-                    Bow bow = new Bow();
-                    currentCharacter.inventory.Add(bow);
-                    break;
-
-                case "Crossbow":
-                    Crossbow crossbow = new Crossbow();
-                    currentCharacter.inventory.Add(crossbow);
-                    break;
-
-                case "Hammer":
-                    Hammer hammer = new Hammer();
-                    currentCharacter.inventory.Add(hammer);
-                    break;
-
-                case "Knife":
-                    Knife knife = new Knife();
-                    currentCharacter.inventory.Add(knife);
-                    break;
-
-                case "Axe":
-                    Axe axe = new Axe();
-                    currentCharacter.inventory.Add(axe);
-                    break;
-            }
+            currentCharacter.inventory.Add(new Item(tb_itemToInventory.Text));
 
             GetInventoryToListBox();
 
