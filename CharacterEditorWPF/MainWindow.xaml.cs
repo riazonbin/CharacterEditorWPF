@@ -87,6 +87,10 @@ namespace CharacterEditorWPF
             tb_magicAttack.Text = newCharacter.magicAttack.ToString();
             tb_physicalDef.Text = newCharacter.physicalDefense.ToString();
 
+            tb_Level.Text = newCharacter.Level.CurrentLevel.ToString();
+            tb_Experience.Text = newCharacter.Level.CurrentExp.ToString();
+            tb_availablePoints.Text = newCharacter.availablePoints.ToString();
+
             GetInventoryToListBox();
         }
 
@@ -112,6 +116,9 @@ namespace CharacterEditorWPF
             tb_attack.Text = "0";
             tb_magicAttack.Text = "0";
             tb_physicalDef.Text = "0";
+
+            tb_Experience.Text = "0";
+            tb_Level.Text = "0";
 
             currentCharacter = null;
             isClearingData = false;
@@ -358,6 +365,24 @@ namespace CharacterEditorWPF
             {
                 lb_inventory.Items.Add(item.Name);
             }
+        }
+
+        private void btn_plus100Exp_Click(object sender, RoutedEventArgs e)
+        {
+            currentCharacter.Level.CurrentExp += 100;
+            FillData(currentCharacter);
+        }
+
+        private void btn_plus500Exp_Click(object sender, RoutedEventArgs e)
+        {
+            currentCharacter.Level.CurrentExp += 500;
+            FillData(currentCharacter);
+        }
+
+        private void btn_plus1000Exp_Click(object sender, RoutedEventArgs e)
+        {
+            currentCharacter.Level.CurrentExp += 1000;
+            FillData(currentCharacter);
         }
     }
 }

@@ -4,6 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,8 +13,8 @@ namespace CharacterEditorCore
     public class Character
     {
         public string Name { get; set; }
-        
-        public Level Level { get; set; }
+
+        public Level Level { get; } = new Level();
 
         public ObjectId _id;
 
@@ -29,7 +30,8 @@ namespace CharacterEditorCore
         protected int dexterity;
         protected int constitution;
         protected int intelligence;
-        protected int availablePoints;
+
+        public int availablePoints;
 
         public double manaPoints;
         public double healthPoints;
@@ -42,9 +44,42 @@ namespace CharacterEditorCore
         public virtual int Constitution { get; set; }
         public virtual int Intelligence { get; set; }
 
+        public Character()
+        {
+            Level.LevelUpEvent += LevelUp;
+            availablePoints = 10;
+        }
+
+        private void LevelUp()
+        {
+            availablePoints += 5;
+        }
+
         public override string ToString()
         {
             return $"{Name} | {_id}";
+        }
+
+        protected bool ChangeSkillPoint(int newV, int oldV)
+        {
+            if(oldV == 0)
+            {
+                return true;
+            }
+
+            if(newV > oldV)
+            {
+                if(availablePoints == 0)
+                {
+                    return false;
+                }
+                availablePoints--;
+            }
+            else
+            {
+                availablePoints++;
+            }
+            return true;
         }
     }
 }

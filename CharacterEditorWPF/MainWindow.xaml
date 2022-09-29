@@ -39,7 +39,7 @@
         <TextBlock x:Name="tb_magicAttack" HorizontalAlignment="Left" Margin="285,290,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
         <Label x:Name="label_physicalDef" Content="Physical def. :" HorizontalAlignment="Left" Margin="205,311,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_physicalDef" HorizontalAlignment="Left" Margin="285,316,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-        <Button x:Name="button_addCharacter" Content="Add" HorizontalAlignment="Left" Margin="56,412,0,0" VerticalAlignment="Top" Height="48" Width="96" Click="button_addCharacter_Click" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="button_addCharacter" Content="Add" HorizontalAlignment="Left" Margin="56,499,0,0" VerticalAlignment="Top" Height="48" Width="96" Click="button_addCharacter_Click" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -59,5 +59,14 @@
         <Label x:Name="lb_addItemToInventory" Content="Add item to inventory" HorizontalAlignment="Left" Margin="431,441,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_AddItem" Content="Add item" HorizontalAlignment="Left" Margin="718,445,0,0" VerticalAlignment="Top" Click="btn_AddItem_Click"/>
         <TextBox x:Name="tb_itemToInventory" HorizontalAlignment="Left" Margin="562,445,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="146" Height="22"/>
+        <Label x:Name="lb_Exp" Content="Experience:" HorizontalAlignment="Left" Margin="207,366,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lb_Level" Content="Level:" HorizontalAlignment="Left" Margin="212,427,0,0" VerticalAlignment="Top" Width="44" RenderTransformOrigin="0.598,0.04"/>
+        <TextBlock x:Name="tb_Experience" HorizontalAlignment="Left" Margin="276,371,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26"/>
+        <TextBlock x:Name="tb_Level" HorizontalAlignment="Left" Margin="251,432,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="18"/>
+        <Button x:Name="btn_plus100Exp" Content="+100" HorizontalAlignment="Left" Margin="212,392,0,0" VerticalAlignment="Top" Click="btn_plus100Exp_Click"/>
+        <Button x:Name="btn_plus500Exp" Content="+500" HorizontalAlignment="Left" Margin="263,392,0,0" VerticalAlignment="Top" Click="btn_plus500Exp_Click"/>
+        <Button x:Name="btn_plus1000Exp" Content="+1000" HorizontalAlignment="Left" Margin="311,392,0,0" VerticalAlignment="Top" Click="btn_plus1000Exp_Click"/>
+        <Label x:Name="lb_availablePoints" Content="Available points:" HorizontalAlignment="Left" Margin="269,134,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_availablePoints" HorizontalAlignment="Left" Margin="370,139,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33"/>
     </Grid>
 </Window>
