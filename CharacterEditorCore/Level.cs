@@ -8,17 +8,17 @@ namespace CharacterEditorCore
 {
     public class Level
     {
-        private int _currentLevel;
-        private int _currentExp;
+        private int _currentLevel = 1;
+        private int _currentExp = 0;
         private int growEdge = 1000;
-        private int currentLevelEdge;
+        private int currentLevelEdge = 1000;
         public int CurrentLevel 
         {
             get { return _currentLevel; }
             set 
             {
                 _currentLevel = value;
-                LevelUpEvent();
+                LevelUpEvent?.Invoke();
             }
         }
         public int CurrentExp
@@ -34,13 +34,6 @@ namespace CharacterEditorCore
                 _currentExp = value;
 
             }
-        }
-
-        public Level()
-        {
-            _currentLevel = 1;
-            _currentExp = 0;
-            currentLevelEdge = 1000;
         }
 
         public event LevelDelegate LevelUpEvent;

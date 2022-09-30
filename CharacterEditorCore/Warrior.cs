@@ -36,14 +36,9 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.WarriorStats.minStrength &&
                     value <= (int)Enums.WarriorStats.maxStrength)
                 {
-                    if(!ChangeSkillPoint(value, strength))
-                    {
-                        return;
-                    }
                     attack += (value - strength) * 5;
                     healthPoints += (value - strength) * 2;
                     
-
                     strength = value;
                 }
             }
@@ -57,10 +52,6 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.WarriorStats.minDexterity &&
                     value <= (int)Enums.WarriorStats.maxDexterity)
                 {
-                    if (!ChangeSkillPoint(value, dexterity))
-                    {
-                        return;
-                    }
                     attack += (value - dexterity);
                     physicalDefense += (value - dexterity);
 
@@ -77,10 +68,6 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.WarriorStats.minConstitution &&
                     value <= (int)Enums.WarriorStats.maxConstitution)
                 {
-                    if (!ChangeSkillPoint(value, constitution))
-                    {
-                        return;
-                    }
                     healthPoints += (value - constitution) * 10;
                     physicalDefense += (value - constitution) * 2;
 
@@ -97,10 +84,6 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.WarriorStats.minIntelligence &&
                     value <= (int)Enums.WarriorStats.maxIntelligence)
                 {
-                    if (!ChangeSkillPoint(value, intelligence))
-                    {
-                        return;
-                    }
                     manaPoints += (value - intelligence);
                     magicAttack += (value - intelligence);
 

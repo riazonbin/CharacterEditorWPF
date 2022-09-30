@@ -89,7 +89,7 @@ namespace CharacterEditorWPF
 
             tb_Level.Text = newCharacter.Level.CurrentLevel.ToString();
             tb_Experience.Text = newCharacter.Level.CurrentExp.ToString();
-            tb_availablePoints.Text = newCharacter.availablePoints.ToString();
+            tb_availablePoints.Text = newCharacter.AvailablePoints.ToString();
 
             GetInventoryToListBox();
         }
@@ -119,6 +119,7 @@ namespace CharacterEditorWPF
 
             tb_Experience.Text = "0";
             tb_Level.Text = "0";
+            tb_availablePoints.Text = "0";
 
             currentCharacter = null;
             isClearingData = false;
@@ -130,7 +131,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            if(currentCharacter.AvailablePoints == 0)
+            {
+                return;
+            }
             currentCharacter.Strength++;
+            currentCharacter.AvailablePoints--;
             FillData(currentCharacter);
         }
 
@@ -140,7 +146,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            if (currentCharacter.AvailablePoints == 0)
+            {
+                return;
+            }
             currentCharacter.Dexterity++;
+            currentCharacter.AvailablePoints--;
             FillData(currentCharacter);
         }
 
@@ -150,7 +161,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            if (currentCharacter.AvailablePoints == 0)
+            {
+                return;
+            }
             currentCharacter.Constitution++;
+            currentCharacter.AvailablePoints--;
             FillData(currentCharacter);
         }
 
@@ -160,7 +176,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            if (currentCharacter.AvailablePoints == 0)
+            {
+                return;
+            }
             currentCharacter.Intelligence++;
+            currentCharacter.AvailablePoints--;
             FillData(currentCharacter);
         }
         private bool CheckCharactOnExistment()
@@ -183,7 +204,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            var oldValue = currentCharacter.Strength;
             currentCharacter.Strength--;
+            if(oldValue != currentCharacter.Strength)
+            {
+                currentCharacter.AvailablePoints++;
+            }
             FillData(currentCharacter);
         }
 
@@ -193,7 +219,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            var oldValue = currentCharacter.Dexterity;
             currentCharacter.Dexterity--;
+            if (oldValue != currentCharacter.Dexterity)
+            {
+                currentCharacter.AvailablePoints++;
+            }
             FillData(currentCharacter);
         }
 
@@ -203,7 +234,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            var oldValue = currentCharacter.Constitution;
             currentCharacter.Constitution--;
+            if (oldValue != currentCharacter.Constitution)
+            {
+                currentCharacter.AvailablePoints++;
+            }
             FillData(currentCharacter);
         }
 
@@ -213,7 +249,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            var oldValue = currentCharacter.Intelligence;
             currentCharacter.Intelligence--;
+            if (oldValue != currentCharacter.Intelligence)
+            {
+                currentCharacter.AvailablePoints++;
+            }
             FillData(currentCharacter);
         }
 

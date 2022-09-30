@@ -36,10 +36,6 @@ namespace CharacterEditorCore
                 if(value >= (int)Enums.RogueStats.minStrength &&
                     value <= (int)Enums.RogueStats.maxStrength)
                 {
-                    if (!ChangeSkillPoint(value, strength))
-                    {
-                        return;
-                    }
                     attack += (value - strength) * 2;
                     healthPoints += (value - strength);
 
@@ -56,10 +52,6 @@ namespace CharacterEditorCore
                 if (value >=(int)Enums.RogueStats.minDexterity &&
                     value <= (int)Enums.RogueStats.maxDexterity)
                 {
-                    if (!ChangeSkillPoint(value, dexterity))
-                    {
-                        return;
-                    }
                     attack += (value - dexterity) * 4;
                     physicalDefense += (value - dexterity) * 1.5;
 
@@ -76,10 +68,6 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.RogueStats.minConstitution &&
                     value <= (int)Enums.RogueStats.maxConstitution)
                 {
-                    if (!ChangeSkillPoint(value, constitution))
-                    {
-                        return;
-                    }
                     healthPoints += (value - constitution) * 6;
 
                     constitution = value;
@@ -95,10 +83,6 @@ namespace CharacterEditorCore
                 if (value >= (int)Enums.RogueStats.minIntelligence &&
                     value <= (int)Enums.RogueStats.maxIntelligence)
                 {
-                    if (!ChangeSkillPoint(value, intelligence))
-                    {
-                        return;
-                    }
                     manaPoints += (value - intelligence) * 1.5;
                     magicAttack += (value - intelligence) * 2;
 

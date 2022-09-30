@@ -14,7 +14,7 @@ namespace CharacterEditorCore
     {
         public string Name { get; set; }
 
-        public Level Level { get; } = new Level();
+        public Level Level = new Level();
 
         public ObjectId _id;
 
@@ -31,7 +31,20 @@ namespace CharacterEditorCore
         protected int constitution;
         protected int intelligence;
 
-        public int availablePoints;
+        protected int availablePoints;
+
+        public int AvailablePoints
+        {
+            get { return availablePoints; }
+            set 
+            { 
+                if(value < 0)
+                {
+                    return;
+                }
+                availablePoints = value;
+            }
+        }
 
         public double manaPoints;
         public double healthPoints;
@@ -58,28 +71,6 @@ namespace CharacterEditorCore
         public override string ToString()
         {
             return $"{Name} | {_id}";
-        }
-
-        protected bool ChangeSkillPoint(int newV, int oldV)
-        {
-            if(oldV == 0)
-            {
-                return true;
-            }
-
-            if(newV > oldV)
-            {
-                if(availablePoints == 0)
-                {
-                    return false;
-                }
-                availablePoints--;
-            }
-            else
-            {
-                availablePoints++;
-            }
-            return true;
         }
     }
 }
