@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore
+namespace CharacterEditorCore.Abilities
 {
-    public class Ability
+    public class RubberMan : Ability
     {
-        public Ability()
+        public RubberMan()
         {
-
+            Name = "Rubber man";
         }
-        public string Name { get; set; }
     }
 }

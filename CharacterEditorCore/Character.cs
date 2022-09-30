@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using CharacterEditorCore.Abilities;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -15,6 +16,17 @@ namespace CharacterEditorCore
         public string Name { get; set; }
 
         public Level Level = new Level();
+
+        public List<Ability> abilities = new List<Ability>();
+
+        public int abilitiesPoints;
+
+        public List<Ability> potentialAbilities = new List<Ability> 
+        { 
+            new BearStrength(),new BlessOfTheGods(), new ImpenetrableSkin(), new Invisibility(), 
+            new LeapOfTiger(), new Rage(), new RubberMan(), new SandMan(), new SilentKiller(),
+            new StoneFist() 
+        };
 
         public ObjectId _id;
 
@@ -60,12 +72,21 @@ namespace CharacterEditorCore
         public Character()
         {
             Level.LevelUpEvent += LevelUp;
+            Level.LevelUpEvent += AbilityPointUp;
             availablePoints = 10;
+            abilitiesPoints = 0;
         }
 
         private void LevelUp()
         {
             availablePoints += 5;
+        }
+        private void AbilityPointUp()
+        {
+            if(this.Level.CurrentLevel % 3 == 0)
+            {
+                abilitiesPoints++;
+            }
         }
 
         public override string ToString()

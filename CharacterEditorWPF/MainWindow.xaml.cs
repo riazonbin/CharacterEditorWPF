@@ -1,4 +1,5 @@
 ﻿using CharacterEditorCore;
+using CharacterEditorCore.Abilities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -14,13 +15,16 @@ namespace CharacterEditorWPF
     public partial class MainWindow : Window
     {
         public Character currentCharacter;
+        public bool isInitializing;
         public bool isCharacterSelected;
         public bool isClearingData;
         public bool isChangingType;
 
         public MainWindow()
         {
+            isInitializing = true;
             InitializeComponent();
+            isInitializing = false;
             RegisterClassMaps();
         }
 
@@ -90,8 +94,11 @@ namespace CharacterEditorWPF
             tb_Level.Text = newCharacter.Level.CurrentLevel.ToString();
             tb_Experience.Text = newCharacter.Level.CurrentExp.ToString();
             tb_availablePoints.Text = newCharacter.AvailablePoints.ToString();
+            tb_abilitiesPoints.Text = newCharacter.abilitiesPoints.ToString();
 
             GetInventoryToListBox();
+            GetPotentialAbilitiesToCheckBox();
+            GetCharactersAbilitiesToCheckBox();
         }
 
         private void ClearData()
@@ -120,6 +127,7 @@ namespace CharacterEditorWPF
             tb_Experience.Text = "0";
             tb_Level.Text = "0";
             tb_availablePoints.Text = "0";
+            tb_abilitiesPoints.Text = "0";
 
             currentCharacter = null;
             isClearingData = false;
@@ -408,6 +416,26 @@ namespace CharacterEditorWPF
             }
         }
 
+        private void GetPotentialAbilitiesToCheckBox()
+        {
+            cb_potentialAbilities.Items.Clear();
+
+            foreach(var ability in currentCharacter.potentialAbilities)
+            {
+                cb_potentialAbilities.Items.Add(ability);
+            }
+        }
+
+        private void GetCharactersAbilitiesToCheckBox()
+        {
+            cb_charactersAbilities.Items.Clear();
+
+            foreach (var ability in currentCharacter.abilities)
+            {
+                cb_charactersAbilities.Items.Add(ability);
+            }
+        }
+
         private void btn_plus100Exp_Click(object sender, RoutedEventArgs e)
         {
             currentCharacter.Level.CurrentExp += 100;
@@ -424,6 +452,34 @@ namespace CharacterEditorWPF
         {
             currentCharacter.Level.CurrentExp += 1000;
             FillData(currentCharacter);
+        }
+
+        private void btn_addAbility_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(currentCharacter is null)
+                {
+                    return;
+                }
+                if(currentCharacter.abilitiesPoints == 0)
+                {
+                    return;
+                }
+
+                Ability potentialAbility = (Ability)cb_potentialAbilities.SelectedItem;
+                if(potentialAbility is null)
+                {
+                    return;
+                }
+
+                currentCharacter.abilities.Add(potentialAbility);
+                currentCharacter.potentialAbilities.Remove(potentialAbility);
+                currentCharacter.abilitiesPoints--;
+
+                FillData(currentCharacter);
+            }
+            catch { }
         }
     }
 }
