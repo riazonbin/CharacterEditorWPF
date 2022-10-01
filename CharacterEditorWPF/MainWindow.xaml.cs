@@ -360,6 +360,7 @@ namespace CharacterEditorWPF
                 var unit = (Character)cb_createdCharacters.SelectedItem;
 
                 currentCharacter = unit;
+                currentCharacter.Subscribe();
 
                 FillData(currentCharacter);
                 isCharacterSelected = true;
@@ -438,20 +439,32 @@ namespace CharacterEditorWPF
 
         private void btn_plus100Exp_Click(object sender, RoutedEventArgs e)
         {
-            currentCharacter.Level.CurrentExp += 100;
-            FillData(currentCharacter);
+            try
+            {
+                currentCharacter.Level.CurrentExp += 100;
+                FillData(currentCharacter);
+            }
+            catch { }   
         }
 
         private void btn_plus500Exp_Click(object sender, RoutedEventArgs e)
         {
-            currentCharacter.Level.CurrentExp += 500;
-            FillData(currentCharacter);
+            try
+            {
+                currentCharacter.Level.CurrentExp += 500;
+                FillData(currentCharacter);
+            }
+            catch { }
         }
 
         private void btn_plus1000Exp_Click(object sender, RoutedEventArgs e)
         {
-            currentCharacter.Level.CurrentExp += 1000;
-            FillData(currentCharacter);
+            try
+            {
+                currentCharacter.Level.CurrentExp += 1000;
+                FillData(currentCharacter);
+            }
+            catch { }
         }
 
         private void btn_addAbility_Click(object sender, RoutedEventArgs e)

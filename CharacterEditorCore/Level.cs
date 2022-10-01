@@ -37,7 +37,6 @@ namespace CharacterEditorCore
         }
 
         public event LevelDelegate LevelUpEvent;
+        public delegate void LevelDelegate();
     }
-
-    public delegate void LevelDelegate();
 }

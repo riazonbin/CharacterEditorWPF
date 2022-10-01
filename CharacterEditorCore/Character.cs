@@ -77,6 +77,12 @@ namespace CharacterEditorCore
             abilitiesPoints = 0;
         }
 
+        public void Subscribe()
+        {
+            Level.LevelUpEvent += LevelUp;
+            Level.LevelUpEvent += AbilityPointUp;
+        }
+
         private void LevelUp()
         {
             availablePoints += 5;
