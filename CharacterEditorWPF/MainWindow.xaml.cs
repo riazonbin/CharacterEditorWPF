@@ -38,18 +38,16 @@ namespace CharacterEditorWPF
 
         private void cb_chooseCharact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            isChangingType = true;
+            if (isCharacterSelected)
+            {
+                return;
+            }
             FillListBox();
 
             if (cb_chooseCharact.SelectedIndex == -1)
             {
                 return;
             }
-            if(isCharacterSelected)
-            {
-                return;
-            }
-            isChangingType = false;
 
             ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
             string? value = typeItem.Content.ToString();
@@ -106,7 +104,6 @@ namespace CharacterEditorWPF
             isClearingData = true;
 
             cb_createdCharacters.SelectedIndex = -1;
-            cb_createdCharacters.Items.Clear();
             cb_chooseCharact.SelectedIndex = -1;
             tb_itemToInventory.Text = "";
             lb_inventory.Items.Clear();
@@ -143,8 +140,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
-            currentCharacter.Strength++;
-            currentCharacter.AvailablePoints--;
+            var oldValue = currentCharacter.Strength;
+            currentCharacter.Strength--;
+            if (oldValue != currentCharacter.Strength)
+            {
+                currentCharacter.AvailablePoints--;
+            }
             FillData(currentCharacter);
         }
 
@@ -158,8 +159,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
-            currentCharacter.Dexterity++;
-            currentCharacter.AvailablePoints--;
+            var oldValue = currentCharacter.Dexterity;
+            currentCharacter.Dexterity--;
+            if (oldValue != currentCharacter.Dexterity)
+            {
+                currentCharacter.AvailablePoints--;
+            }
             FillData(currentCharacter);
         }
 
@@ -173,8 +178,13 @@ namespace CharacterEditorWPF
             {
                 return;
             }
-            currentCharacter.Constitution++;
-            currentCharacter.AvailablePoints--;
+
+            var oldValue = currentCharacter.Constitution;
+            currentCharacter.Constitution--;
+            if(oldValue != currentCharacter.Constitution)
+            {
+                currentCharacter.AvailablePoints--;
+            }
             FillData(currentCharacter);
         }
 
@@ -188,8 +198,12 @@ namespace CharacterEditorWPF
             {
                 return;
             }
-            currentCharacter.Intelligence++;
-            currentCharacter.AvailablePoints--;
+            var oldValue = currentCharacter.Intelligence;
+            currentCharacter.Intelligence--;
+            if (oldValue != currentCharacter.Intelligence)
+            {
+                currentCharacter.AvailablePoints--;
+            }
             FillData(currentCharacter);
         }
         private bool CheckCharactOnExistment()
@@ -296,35 +310,20 @@ namespace CharacterEditorWPF
 
         }
 
-        private async void FillListBox()
+        private void FillListBox()
         {
-            if(cb_createdCharacters.Items.Count != 0)
-            {
-                cb_createdCharacters.Items.Clear();
-            }
-
-            if (cb_chooseCharact.SelectedItem is null)
-            {
-                return;
-            }
-
-            ComboBoxItem typeItem = (ComboBoxItem)cb_chooseCharact.SelectedItem;
-            string? type = typeItem.Content.ToString();
+            cb_createdCharacters.Items.Clear();
 
             var collection = MongoDBLink.MongoDB.GetCollection();
             try
             {
-                var filter = new BsonDocument("_t", type);
-                using (var cursor = await collection.FindAsync(filter))
+                var filter = new BsonDocument();
+                var cursor = collection.Find(filter);
                 {
-                    while (await cursor.MoveNextAsync())
+                    foreach (var doc in cursor.ToList())
                     {
-                        var docs = cursor.Current;
-                        foreach (var doc in docs)
-                        {
-                            cb_createdCharacters.Items.Add(doc);
+                        cb_createdCharacters.Items.Add(doc);
 
-                        }
                     }
                 }
             }
@@ -342,6 +341,7 @@ namespace CharacterEditorWPF
 
         private void form_mainForm_Loaded(object sender, RoutedEventArgs e)
         {
+            FillListBox();
         }
 
         private void cb_createdCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -365,6 +365,7 @@ namespace CharacterEditorWPF
                 FillData(currentCharacter);
                 isCharacterSelected = true;
                 tb_name.Text = currentCharacter.Name;
+                SetTypeForSelectedCharacter();
                 isCharacterSelected = false;
             }
             catch {};
