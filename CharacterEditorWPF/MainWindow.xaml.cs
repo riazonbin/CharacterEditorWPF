@@ -141,7 +141,7 @@ namespace CharacterEditorWPF
                 return;
             }
             var oldValue = currentCharacter.Strength;
-            currentCharacter.Strength--;
+            currentCharacter.Strength++;
             if (oldValue != currentCharacter.Strength)
             {
                 currentCharacter.AvailablePoints--;
@@ -160,7 +160,7 @@ namespace CharacterEditorWPF
                 return;
             }
             var oldValue = currentCharacter.Dexterity;
-            currentCharacter.Dexterity--;
+            currentCharacter.Dexterity++;
             if (oldValue != currentCharacter.Dexterity)
             {
                 currentCharacter.AvailablePoints--;
@@ -180,7 +180,7 @@ namespace CharacterEditorWPF
             }
 
             var oldValue = currentCharacter.Constitution;
-            currentCharacter.Constitution--;
+            currentCharacter.Constitution++;
             if(oldValue != currentCharacter.Constitution)
             {
                 currentCharacter.AvailablePoints--;
@@ -199,7 +199,7 @@ namespace CharacterEditorWPF
                 return;
             }
             var oldValue = currentCharacter.Intelligence;
-            currentCharacter.Intelligence--;
+            currentCharacter.Intelligence++;
             if (oldValue != currentCharacter.Intelligence)
             {
                 currentCharacter.AvailablePoints--;
