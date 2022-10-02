@@ -19,17 +19,36 @@ namespace CharacterEditorCore
             {
                 _currentLevel = value;
                 LevelUpEvent?.Invoke();
+                return;
             }
         }
+
+        public int CurrentLevelEdge
+        {
+            get { return currentLevelEdge; }
+            set
+            {
+                currentLevelEdge = value;
+                return;
+            }
+        }
+
         public int CurrentExp
         {
             get { return _currentExp; }
             set
             {
-                while(value >= currentLevelEdge)
+                if(this.CurrentLevel > 1 && this.CurrentLevelEdge == 1000)
+                {
+                    _currentExp = value;
+                    CurrentLevelEdge += growEdge * CurrentLevel;
+                    return;
+                }
+
+                if(value >= currentLevelEdge)
                 {
                     CurrentLevel++;
-                    currentLevelEdge += growEdge * CurrentLevel;
+                    CurrentLevelEdge += growEdge * CurrentLevel;
                 }
                 _currentExp = value;
 
