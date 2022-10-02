@@ -26,9 +26,9 @@ namespace CharacterEditorCore
             get { return _currentExp; }
             set
             {
-                if (value >= currentLevelEdge)
+                while(value >= currentLevelEdge)
                 {
-                    ++CurrentLevel;
+                    CurrentLevel++;
                     currentLevelEdge += growEdge * CurrentLevel;
                 }
                 _currentExp = value;
