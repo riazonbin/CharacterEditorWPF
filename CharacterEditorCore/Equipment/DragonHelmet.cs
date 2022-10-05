@@ -10,7 +10,7 @@ namespace CharacterEditorCore.Equipment
     {
         public DragonHelmet()
         {
-            RequiredStrength = 65;
+            RequiredStrength = 75;
             RequiredDexterity = 65;
             RequiredConstitution = 65;
             RequiredIntelligence = 45;
