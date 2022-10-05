@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CharacterEditorCore.Equipments
 {
-    public class DiamonSword : Equipment
+    public class DiamondSword : Equipment
     {
-        public DiamonSword()
+        public DiamondSword()
         {
             RequiredStrength = 95;
             RequiredDexterity = 55;

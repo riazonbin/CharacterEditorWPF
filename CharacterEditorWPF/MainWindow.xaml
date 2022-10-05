@@ -75,9 +75,11 @@
         <Button x:Name="btn_addAbility" Content="Add ability" HorizontalAlignment="Left" Margin="699,187,0,0" VerticalAlignment="Top" Width="66" RenderTransformOrigin="0.278,0.687" Click="btn_addAbility_Click"/>
         <Label x:Name="lb_availableAbilitiesPoints" Content="Abilities points:" HorizontalAlignment="Left" Margin="400,134,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_abilitiesPoints" HorizontalAlignment="Left" Margin="494,139,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53"/>
-        <ComboBox x:Name="cb_possibleEquipment" HorizontalAlignment="Left" Margin="400,253,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cb_charactersEquipment" HorizontalAlignment="Left" Margin="400,310,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btn_addEquipment" Content="Add equipment" HorizontalAlignment="Left" Margin="544,253,0,0" VerticalAlignment="Top" Width="91" Height="21" Click="btn_addEquipment_Click"/>
-        <Button x:Name="btn_removeEquipment" Content="Remove equipment" HorizontalAlignment="Left" Margin="544,309,0,0" VerticalAlignment="Top" Width="114"/>
+        <ComboBox x:Name="cb_possibleEquipment" HorizontalAlignment="Left" Margin="385,284,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cb_charactersEquipment" HorizontalAlignment="Left" Margin="548,285,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_addEquipment" Content="Add equipment" HorizontalAlignment="Left" Margin="385,322,0,0" VerticalAlignment="Top" Width="91" Height="21" Click="btn_addEquipment_Click"/>
+        <Button x:Name="btn_removeEquipment" Content="Remove equipment" HorizontalAlignment="Left" Margin="548,323,0,0" VerticalAlignment="Top" Width="114" Click="btn_removeEquipment_Click"/>
+        <TextBlock x:Name="textblock_charactersEquipment" HorizontalAlignment="Left" Margin="548,256,0,0" TextWrapping="Wrap" Text="Character's equipment" VerticalAlignment="Top" RenderTransformOrigin="0.385,-0.311"/>
+        <TextBlock x:Name="textblock_possibleEquipment" HorizontalAlignment="Left" Margin="391,256,0,0" TextWrapping="Wrap" Text="Possible equipment" VerticalAlignment="Top" RenderTransformOrigin="0.385,-0.311"/>
     </Grid>
 </Window>

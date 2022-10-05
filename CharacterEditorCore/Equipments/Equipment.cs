@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace CharacterEditorCore.Equipments
 {
+    [BsonKnownTypes(typeof(GoldenSword), typeof(WoodenSword), 
+        typeof(DiamondSword), typeof(DragonHelmet), typeof(LeatherHelmet),
+        typeof(SteelHelmet), typeof(DragonBreastplate), typeof(SteelBreastplate),
+        typeof(WoodenBreastplate)) ]
     public abstract class Equipment
     {
         public int RequiredStrength { get; set; }
@@ -31,5 +36,10 @@ namespace CharacterEditorCore.Equipments
         public string EquipmentName { get; set; }
 
         public string EquipmentType { get; set; }
+
+        public override string ToString()
+        {
+            return $"{EquipmentName}";
+        }
     }
 }

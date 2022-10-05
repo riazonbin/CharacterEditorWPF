@@ -28,6 +28,11 @@ namespace CharacterEditorCore
         {
             try
             {
+                if (ea.NewItems is null)
+                {
+                    return;
+                }
+
                 foreach (var item in ea.NewItems)
                 {
                     IncreaseStats((Equipment)item);
@@ -62,20 +67,9 @@ namespace CharacterEditorCore
 
         public List<Equipment> possibleEquipment = new List<Equipment>
         {
-            new DiamonSword(), new DragonBreastplate(), new DragonHelmet(), new GoldenSword(), new LeatherHelmet(), new SteelBreastplate(),
+            new DiamondSword(), new DragonBreastplate(), new DragonHelmet(), new GoldenSword(), new LeatherHelmet(), new SteelBreastplate(),
             new SteelHelmet(), new WoodenBreastplate(), new WoodenSword()
         };
-        public List<Equipment> possibleHelmets = new List<Equipment>
-        {
-            new DragonHelmet(), new LeatherHelmet(), new SteelHelmet()
-        };
-        public List<Equipment> possibleSwords = new List<Equipment>
-        {
-            new DiamonSword()
-        };
-
-
-
         #endregion
 
         public ObjectId _id;
@@ -132,6 +126,7 @@ namespace CharacterEditorCore
         {
             Level.LevelUpEvent += LevelUp;
             Level.LevelUpEvent += AbilityPointUp;
+            charactersEquipment.CollectionChanged += EquipmentChanged;
         }
 
         private void LevelUp()

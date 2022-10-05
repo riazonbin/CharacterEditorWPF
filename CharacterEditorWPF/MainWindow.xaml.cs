@@ -150,6 +150,9 @@ namespace CharacterEditorWPF
             tb_availablePoints.Text = "0";
             tb_abilitiesPoints.Text = "0";
 
+            cb_charactersEquipment.SelectedIndex = -1;
+            cb_possibleEquipment.SelectedIndex = -1;
+
             currentCharacter = null;
             isClearingData = false;
         }
@@ -553,6 +556,7 @@ namespace CharacterEditorWPF
 
             currentCharacter.charactersEquipment.Add(potentialEquipment);
             currentCharacter.possibleEquipment.Remove(potentialEquipment);
+            MongoDBLink.MongoDB.ReplaceOneInDataBase(currentCharacter);
 
             FillData(currentCharacter);
         }
@@ -568,6 +572,22 @@ namespace CharacterEditorWPF
                 }
             }
             return true;
+        }
+
+        private void btn_removeEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            if (cb_charactersEquipment.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            Equipment chosenEquip = (Equipment)cb_charactersEquipment.SelectedItem;
+
+            currentCharacter.charactersEquipment.Remove(chosenEquip);
+            currentCharacter.possibleEquipment.Add(chosenEquip);
+            MongoDBLink.MongoDB.ReplaceOneInDataBase(currentCharacter);
+
+            FillData(currentCharacter);
         }
     }
 }
