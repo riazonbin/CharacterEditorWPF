@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class DiamonSword : Equipment
     {
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 0;
             EquipmentLevel = 3;
             EquipmentName = "Diamond sword";
+            EquipmentType = "Weapon";
         }
     }
 }

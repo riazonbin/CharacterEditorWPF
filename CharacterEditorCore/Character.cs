@@ -1,9 +1,12 @@
 ﻿using CharacterEditorCore.Abilities;
+using CharacterEditorCore.Equipments;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,14 +22,61 @@ namespace CharacterEditorCore
 
         public List<Ability> abilities = new List<Ability>();
 
+        public ObservableCollection<Equipment> charactersEquipment = new ObservableCollection<Equipment>();
+
+        private void EquipmentChanged(object sender, NotifyCollectionChangedEventArgs ea)
+        {
+            try
+            {
+                foreach (var item in ea.NewItems)
+                {
+                    IncreaseStats((Equipment)item);
+                }
+            }
+            catch { }
+
+            try
+            {
+                if(ea.OldItems is null)
+                {
+                    return;
+                }
+
+                foreach (var item in ea.OldItems)
+                {
+                    DecreaseStats((Equipment)item);
+                }
+            }
+            catch { }
+        }
+
         public int abilitiesPoints;
 
+        #region PotentialAbsAndEquip
         public List<Ability> potentialAbilities = new List<Ability> 
         { 
             new BearStrength(),new BlessOfTheGods(), new ImpenetrableSkin(), new Invisibility(), 
             new LeapOfTiger(), new Rage(), new RubberMan(), new SandMan(), new SilentKiller(),
             new StoneFist() 
         };
+
+        public List<Equipment> possibleEquipment = new List<Equipment>
+        {
+            new DiamonSword(), new DragonBreastplate(), new DragonHelmet(), new GoldenSword(), new LeatherHelmet(), new SteelBreastplate(),
+            new SteelHelmet(), new WoodenBreastplate(), new WoodenSword()
+        };
+        public List<Equipment> possibleHelmets = new List<Equipment>
+        {
+            new DragonHelmet(), new LeatherHelmet(), new SteelHelmet()
+        };
+        public List<Equipment> possibleSwords = new List<Equipment>
+        {
+            new DiamonSword()
+        };
+
+
+
+        #endregion
 
         public ObjectId _id;
 
@@ -75,6 +125,7 @@ namespace CharacterEditorCore
             Level.LevelUpEvent += AbilityPointUp;
             availablePoints = 10;
             abilitiesPoints = 0;
+            charactersEquipment.CollectionChanged += EquipmentChanged;
         }
 
         public void Subscribe()
@@ -93,6 +144,35 @@ namespace CharacterEditorCore
             {
                 abilitiesPoints++;
             }
+        }
+
+        private void IncreaseStats(Equipment equipment)
+        {
+            this.attack += equipment.AttackBuff;
+            this.magicAttack += equipment.MagicAttackBuff;
+            this.healthPoints += equipment.HealthPointsBuff;
+            this.manaPoints += equipment.ManaPointsBuff;
+            this.physicalDefense += equipment.PhysicalDefBuff;
+        }
+        private void DecreaseStats(Equipment equipment)
+        {
+            this.attack -= equipment.AttackBuff;
+            this.magicAttack -= equipment.MagicAttackBuff;
+            this.healthPoints -= equipment.HealthPointsBuff;
+            this.manaPoints -= equipment.ManaPointsBuff;
+            this.physicalDefense -= equipment.PhysicalDefBuff;
+        }
+
+        public bool CheckCompatibility(Equipment equipment)
+        {
+            if(equipment.RequiredStrength > this.Strength ||
+                equipment.RequiredDexterity > this.Dexterity ||
+                equipment.RequiredConstitution > this.Constitution ||
+                equipment.RequiredIntelligence > this.Intelligence)
+            {
+                return false;
+            }
+            return true;
         }
 
         public override string ToString()

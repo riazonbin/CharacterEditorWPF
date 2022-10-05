@@ -1,5 +1,6 @@
 ﻿using CharacterEditorCore;
 using CharacterEditorCore.Abilities;
+using CharacterEditorCore.Equipments;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -98,6 +99,28 @@ namespace CharacterEditorWPF
             GetInventoryToListBox();
             GetPotentialAbilitiesToCheckBox();
             GetCharactersAbilitiesToCheckBox();
+            GetPossibleEquipmentToCheckBox();
+            GetCharactersEquipmentToCheckBox();
+        }
+
+        private void GetCharactersEquipmentToCheckBox()
+        {
+            cb_charactersEquipment.Items.Clear();
+
+            foreach (var item in currentCharacter.charactersEquipment)
+            {
+                cb_charactersEquipment.Items.Add(item);
+            }
+        }
+
+        private void GetPossibleEquipmentToCheckBox()
+        {
+            cb_possibleEquipment.Items.Clear();
+
+            foreach(var item in currentCharacter.possibleEquipment)
+            {
+                cb_possibleEquipment.Items.Add(item);
+            }
         }
 
         private void ClearData()
@@ -508,5 +531,43 @@ namespace CharacterEditorWPF
         }
         #endregion
 
+        private void btn_addEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            if(cb_possibleEquipment.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            Equipment potentialEquipment = (Equipment)cb_possibleEquipment.SelectedItem;
+
+            if (!currentCharacter.CheckCompatibility(potentialEquipment))
+            {
+                MessageBox.Show("Not enough stats!");
+                return;
+            }
+            if(!CheckRepeatingTypeOfEquipment(potentialEquipment))
+            {
+                MessageBox.Show($"There is already {potentialEquipment.EquipmentType} equipment in character");
+                return;
+            }
+
+            currentCharacter.charactersEquipment.Add(potentialEquipment);
+            currentCharacter.possibleEquipment.Remove(potentialEquipment);
+
+            FillData(currentCharacter);
+        }
+
+
+        private bool CheckRepeatingTypeOfEquipment(Equipment equipment)
+        {
+            foreach(Equipment equip in cb_charactersEquipment.Items)
+            {
+                if(equip.EquipmentType == equipment.EquipmentType)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

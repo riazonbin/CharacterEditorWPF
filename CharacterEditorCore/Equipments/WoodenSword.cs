@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class WoodenSword : Equipment
     {
         public WoodenSword()
         {
-            RequiredStrength = 35;
-            RequiredDexterity = 35;
-            RequiredConstitution = 35;
-            RequiredIntelligence = 15;
+            RequiredStrength = 15;
+            RequiredDexterity = 10;
+            RequiredConstitution = 10;
+            RequiredIntelligence = 10;
             HealthPointsBuff = 0;
             ManaPointsBuff = 0;
             AttackBuff = 25;
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 0;
             EquipmentLevel = 1;
             EquipmentName = "Wooden sword";
+            EquipmentType = "Weapon";
         }
     }
 }

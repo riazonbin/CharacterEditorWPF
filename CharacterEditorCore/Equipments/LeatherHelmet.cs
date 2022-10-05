@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class LeatherHelmet : Equipment
     {
         public LeatherHelmet()
         {
-            RequiredStrength = 15; 
-            RequiredDexterity = 15;
-            RequiredConstitution = 15;
+            RequiredStrength = 10; 
+            RequiredDexterity = 10;
+            RequiredConstitution = 10;
             RequiredIntelligence = 5;
             HealthPointsBuff = 5;
             ManaPointsBuff = 0;
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 10;
             EquipmentLevel = 1;
             EquipmentName = "Leather Helmet";
+            EquipmentType = "Helmet";
         }
     }
 }

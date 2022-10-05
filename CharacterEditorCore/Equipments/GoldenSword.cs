@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class GoldenSword : Equipment
     {
         public GoldenSword()
         {
-            RequiredStrength = 55;
-            RequiredDexterity = 55;
-            RequiredConstitution = 55;
-            RequiredIntelligence = 25;
+            RequiredStrength = 35;
+            RequiredDexterity = 30;
+            RequiredConstitution = 20;
+            RequiredIntelligence = 20;
             HealthPointsBuff = 0;
             ManaPointsBuff = 5;
             AttackBuff = 55;
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 0;
             EquipmentLevel = 2;
             EquipmentName = "Golden sword";
+            EquipmentType = "Weapon";
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public abstract class Equipment
     {
@@ -29,5 +29,7 @@ namespace CharacterEditorCore.Equipment
         public int EquipmentLevel { get; set; }
 
         public string EquipmentName { get; set; }
+
+        public string EquipmentType { get; set; }
     }
 }

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class WoodenBreastplate : Equipment
     {
         public WoodenBreastplate()
         {
             RequiredStrength = 25;
-            RequiredDexterity = 25;
-            RequiredConstitution = 25;
+            RequiredDexterity = 10;
+            RequiredConstitution = 15;
             RequiredIntelligence = 5;
             HealthPointsBuff = 10;
             ManaPointsBuff = 0;
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 20;
             EquipmentLevel = 1;
             EquipmentName = "Wooden breastplate";
+            EquipmentType = "Breastplate";
         }
     }
 }

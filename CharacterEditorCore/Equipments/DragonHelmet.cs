@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipment
+namespace CharacterEditorCore.Equipments
 {
     public class DragonHelmet : Equipment
     {
@@ -21,6 +21,7 @@ namespace CharacterEditorCore.Equipment
             PhysicalDefBuff = 65;
             EquipmentLevel = 3;
             EquipmentName = "Dragon Helmet";
+            EquipmentType = "Helmet";
         }
     }
 }
