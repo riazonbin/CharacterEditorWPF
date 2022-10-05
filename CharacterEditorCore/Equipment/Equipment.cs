@@ -27,5 +27,7 @@ namespace CharacterEditorCore.Equipment
         public int PhysicalDefBuff { get; set; }
 
         public int EquipmentLevel { get; set; }
+
+        public string EquipmentName { get; set; }
     }
 }
