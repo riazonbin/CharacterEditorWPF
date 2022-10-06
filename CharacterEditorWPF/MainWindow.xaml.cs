@@ -350,6 +350,8 @@ namespace CharacterEditorWPF
                     return;
                 }
 
+                GetStatsWithoutBuffs();
+
                 if(MongoDBLink.MongoDB.FindById(currentCharacter._id.ToString()) is null)
                 {
                     MongoDBLink.MongoDB.AddToDataBase(currentCharacter);
@@ -400,6 +402,7 @@ namespace CharacterEditorWPF
 
                 currentCharacter = MongoDBLink.MongoDB.FindById(unit.Id);
                 currentCharacter.Subscribe();
+                GetStatsWithBuffs();
 
                 FillData(currentCharacter);
                 isCharacterSelected = true;
@@ -556,7 +559,7 @@ namespace CharacterEditorWPF
 
             currentCharacter.charactersEquipment.Add(potentialEquipment);
             currentCharacter.possibleEquipment.Remove(potentialEquipment);
-            MongoDBLink.MongoDB.ReplaceOneInDataBase(currentCharacter);
+            MongoDBLink.MongoDB.UpdateCharacter(currentCharacter);
 
             FillData(currentCharacter);
         }
@@ -585,9 +588,25 @@ namespace CharacterEditorWPF
 
             currentCharacter.charactersEquipment.Remove(chosenEquip);
             currentCharacter.possibleEquipment.Add(chosenEquip);
-            MongoDBLink.MongoDB.ReplaceOneInDataBase(currentCharacter);
+            MongoDBLink.MongoDB.UpdateCharacter(currentCharacter);
 
             FillData(currentCharacter);
+        }
+
+        private void GetStatsWithoutBuffs()
+        {
+            foreach(var equip in currentCharacter.charactersEquipment)
+            {
+                currentCharacter.DecreaseStats(equip);
+            }
+        }
+
+        private void GetStatsWithBuffs()
+        {
+            foreach (var equip in currentCharacter.charactersEquipment)
+            {
+                currentCharacter.IncreaseStats(equip);
+            }
         }
     }
 }

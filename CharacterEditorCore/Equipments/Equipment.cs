@@ -21,6 +21,14 @@ namespace CharacterEditorCore.Equipments
 
         public int RequiredIntelligence { get; set; }
 
+        public int StrengthBuff { get; set; }
+
+        public int DexterityBuff { get; set; }
+
+        public int ConstitutionBuff { get; set; }
+
+        public int IntelligenceBuff { get; set; }
+
         public int HealthPointsBuff { get; set; }
 
         public int ManaPointsBuff { get; set; }

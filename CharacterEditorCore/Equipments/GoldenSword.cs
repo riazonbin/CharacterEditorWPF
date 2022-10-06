@@ -14,6 +14,12 @@ namespace CharacterEditorCore.Equipments
             RequiredDexterity = 30;
             RequiredConstitution = 20;
             RequiredIntelligence = 20;
+
+            StrengthBuff = 4;
+            DexterityBuff = 2;
+            ConstitutionBuff = 2;
+            IntelligenceBuff = 2;
+
             HealthPointsBuff = 0;
             ManaPointsBuff = 5;
             AttackBuff = 55;

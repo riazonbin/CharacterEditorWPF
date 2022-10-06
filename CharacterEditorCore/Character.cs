@@ -24,6 +24,8 @@ namespace CharacterEditorCore
 
         public ObservableCollection<Equipment> charactersEquipment = new ObservableCollection<Equipment>();
 
+        public bool IsDeserialized;
+
         private void EquipmentChanged(object sender, NotifyCollectionChangedEventArgs ea)
         {
             try
@@ -37,7 +39,7 @@ namespace CharacterEditorCore
 
             try
             {
-                if(ea.OldItems is null)
+                if (ea.OldItems is null)
                 {
                     return;
                 }
@@ -53,11 +55,11 @@ namespace CharacterEditorCore
         public int abilitiesPoints;
 
         #region PotentialAbsAndEquip
-        public List<Ability> potentialAbilities = new List<Ability> 
-        { 
-            new BearStrength(),new BlessOfTheGods(), new ImpenetrableSkin(), new Invisibility(), 
+        public List<Ability> potentialAbilities = new List<Ability>
+        {
+            new BearStrength(),new BlessOfTheGods(), new ImpenetrableSkin(), new Invisibility(),
             new LeapOfTiger(), new Rage(), new RubberMan(), new SandMan(), new SilentKiller(),
-            new StoneFist() 
+            new StoneFist()
         };
 
         public List<Equipment> possibleEquipment = new List<Equipment>
@@ -82,14 +84,19 @@ namespace CharacterEditorCore
         protected int constitution;
         protected int intelligence;
 
+        public virtual int Strength { get; set; }
+        public virtual int Dexterity { get; set; }
+        public virtual int Constitution { get; set; }
+        public virtual int Intelligence { get; set; }
+
         protected int availablePoints;
 
         public int AvailablePoints
         {
             get { return availablePoints; }
-            set 
-            { 
-                if(value < 0)
+            set
+            {
+                if (value < 0)
                 {
                     return;
                 }
@@ -103,10 +110,6 @@ namespace CharacterEditorCore
         public double physicalDefense;
         public double magicAttack;
 
-        public virtual int Strength { get; set; }
-        public virtual int Dexterity { get; set; }
-        public virtual int Constitution { get; set; }
-        public virtual int Intelligence { get; set; }
 
         public Character()
         {
@@ -136,21 +139,31 @@ namespace CharacterEditorCore
             }
         }
 
-        private void IncreaseStats(Equipment equipment)
+        public void IncreaseStats(Equipment equipment)
         {
             this.attack += equipment.AttackBuff;
             this.magicAttack += equipment.MagicAttackBuff;
             this.healthPoints += equipment.HealthPointsBuff;
             this.manaPoints += equipment.ManaPointsBuff;
             this.physicalDefense += equipment.PhysicalDefBuff;
+
+            this.Strength += equipment.StrengthBuff;
+            this.Dexterity += equipment.DexterityBuff;
+            this.Constitution += equipment.ConstitutionBuff;
+            this.Intelligence += equipment.IntelligenceBuff;
         }
-        private void DecreaseStats(Equipment equipment)
+        public void DecreaseStats(Equipment equipment)
         {
             this.attack -= equipment.AttackBuff;
             this.magicAttack -= equipment.MagicAttackBuff;
             this.healthPoints -= equipment.HealthPointsBuff;
             this.manaPoints -= equipment.ManaPointsBuff;
             this.physicalDefense -= equipment.PhysicalDefBuff;
+
+            this.Strength -= equipment.StrengthBuff;
+            this.Dexterity -= equipment.DexterityBuff;
+            this.Constitution -= equipment.ConstitutionBuff;
+            this.Intelligence -= equipment.IntelligenceBuff;
         }
 
         public bool CheckCompatibility(Equipment equipment)
