@@ -39,7 +39,7 @@ namespace CharacterEditorCore.Equipments
 
         public override string ToString()
         {
-            return $"{EquipmentName}";
+            return $"{EquipmentName} | {EquipmentLevel}";
         }
     }
 }
