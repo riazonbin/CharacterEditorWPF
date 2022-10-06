@@ -28,11 +28,6 @@ namespace CharacterEditorCore
         {
             try
             {
-                if (ea.NewItems is null)
-                {
-                    return;
-                }
-
                 foreach (var item in ea.NewItems)
                 {
                     IncreaseStats((Equipment)item);
