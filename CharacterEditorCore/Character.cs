@@ -24,8 +24,6 @@ namespace CharacterEditorCore
 
         public ObservableCollection<Equipment> charactersEquipment = new ObservableCollection<Equipment>();
 
-        public bool IsDeserialized;
-
         private void EquipmentChanged(object sender, NotifyCollectionChangedEventArgs ea)
         {
             try
