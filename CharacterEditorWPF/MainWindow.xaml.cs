@@ -153,6 +153,9 @@ namespace CharacterEditorWPF
             cb_charactersEquipment.SelectedIndex = -1;
             cb_possibleEquipment.SelectedIndex = -1;
 
+            cb_charactersEquipment.Items.Clear();
+            cb_possibleEquipment.Items.Clear();
+
             currentCharacter = null;
             isClearingData = false;
         }
@@ -543,6 +546,10 @@ namespace CharacterEditorWPF
             {
                 return;
             }
+            if(currentCharacter is null)
+            {
+                return;
+            }
 
             Equipment potentialEquipment = (Equipment)cb_possibleEquipment.SelectedItem;
 
@@ -580,6 +587,10 @@ namespace CharacterEditorWPF
         private void btn_removeEquipment_Click(object sender, RoutedEventArgs e)
         {
             if (cb_charactersEquipment.SelectedIndex == -1)
+            {
+                return;
+            }
+            if (currentCharacter is null)
             {
                 return;
             }
