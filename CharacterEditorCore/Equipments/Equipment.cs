@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,11 @@ namespace CharacterEditorCore.Equipments
         typeof(DiamondSword), typeof(DragonHelmet), typeof(LeatherHelmet),
         typeof(SteelHelmet), typeof(DragonBreastplate), typeof(SteelBreastplate),
         typeof(WoodenBreastplate)) ]
-    public abstract class Equipment
+    public class Equipment
     {
+        [BsonId]
+        public ObjectId equipment_id;
+
         public int RequiredStrength { get; set; }
 
         public int RequiredDexterity { get; set; }
@@ -48,6 +52,10 @@ namespace CharacterEditorCore.Equipments
         public override string ToString()
         {
             return $"{EquipmentName} | {EquipmentLevel}";
+        }
+        public override bool Equals(object? obj)
+        {
+            return this.EquipmentName == (obj as Equipment).EquipmentName;
         }
     }
 }

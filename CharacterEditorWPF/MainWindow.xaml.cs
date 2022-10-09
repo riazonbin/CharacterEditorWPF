@@ -5,6 +5,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
+using System.DirectoryServices.ActiveDirectory;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -117,7 +119,17 @@ namespace CharacterEditorWPF
         {
             cb_possibleEquipment.Items.Clear();
 
-            foreach(var item in currentCharacter.possibleEquipment)
+            var collectionFromDB = MongoDBLink.EquipmentRep.EquipmentRepository.GetDefaultEquipmentFromDataBase();
+
+            var filter = new BsonDocument();
+            var collection = collectionFromDB.Find(filter).ToList();
+
+            foreach (var item in currentCharacter.charactersEquipment)
+            {
+                collection.Remove(item);
+            }
+
+            foreach(var item in collection)
             {
                 cb_possibleEquipment.Items.Add(item);
             }

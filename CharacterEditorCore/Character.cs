@@ -60,11 +60,6 @@ namespace CharacterEditorCore
             new StoneFist()
         };
 
-        public List<Equipment> possibleEquipment = new List<Equipment>
-        {
-            new DiamondSword(), new DragonBreastplate(), new DragonHelmet(), new GoldenSword(), new LeatherHelmet(), new SteelBreastplate(),
-            new SteelHelmet(), new WoodenBreastplate(), new WoodenSword()
-        };
         #endregion
 
         public ObjectId _id;

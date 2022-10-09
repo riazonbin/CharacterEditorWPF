@@ -1,4 +1,5 @@
 ﻿using CharacterEditorCore;
+using CharacterEditorCore.Equipments;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -67,8 +68,6 @@ namespace MongoDBLink
             var updateDefenition = Builders<Character>.Update.Set(x => x.possibleEquipment, character.possibleEquipment)
                                                              .Set(x => x.charactersEquipment, character.charactersEquipment);
             collection.UpdateOne(filter, updateDefenition);
-
-
         }
     }
 }
