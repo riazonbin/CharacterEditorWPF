@@ -65,8 +65,7 @@ namespace MongoDBLink
             var database = client.GetDatabase("CharacterEditorZaripov");
             var collection = database.GetCollection<Character>("CharactersCollection");
             var filter = new BsonDocument("_id", character._id);
-            var updateDefenition = Builders<Character>.Update.Set(x => x.possibleEquipment, character.possibleEquipment)
-                                                             .Set(x => x.charactersEquipment, character.charactersEquipment);
+            var updateDefenition = Builders<Character>.Update.Set(x => x.charactersEquipment, character.charactersEquipment);
             collection.UpdateOne(filter, updateDefenition);
         }
     }

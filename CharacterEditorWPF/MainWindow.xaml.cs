@@ -577,7 +577,6 @@ namespace CharacterEditorWPF
             }
 
             currentCharacter.charactersEquipment.Add(potentialEquipment);
-            currentCharacter.possibleEquipment.Remove(potentialEquipment);
             MongoDBLink.MongoDB.UpdateCharacter(currentCharacter);
 
             FillData(currentCharacter);
@@ -610,7 +609,6 @@ namespace CharacterEditorWPF
             Equipment chosenEquip = (Equipment)cb_charactersEquipment.SelectedItem;
 
             currentCharacter.charactersEquipment.Remove(chosenEquip);
-            currentCharacter.possibleEquipment.Add(chosenEquip);
             MongoDBLink.MongoDB.UpdateCharacter(currentCharacter);
 
             FillData(currentCharacter);
