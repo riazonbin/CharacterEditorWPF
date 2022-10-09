@@ -35,7 +35,6 @@ namespace MongoDBLink
             Exclude("physicalDefense").
             Exclude("magicAttack").
             Exclude("attack").
-            Exclude("magicAttack").
             Exclude("manaPoints").
             Exclude("healthPoints");
             var filter = Builders<Character>.Filter.Eq("_id", ObjectId.Parse(id));
@@ -52,7 +51,6 @@ namespace MongoDBLink
             Exclude("physicalDefense").
             Exclude("magicAttack").
             Exclude("attack").
-            Exclude("magicAttack").
             Exclude("manaPoints").
             Exclude("healthPoints");
             var database = client.GetDatabase("CharacterEditorZaripov");
