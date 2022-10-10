@@ -9,7 +9,10 @@
       Title="MatchPage">
 
     <Grid x:Name="page_MatchPage" Background="White">
-        <Button Content="Button" HorizontalAlignment="Left" Margin="357,170,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-
+        <TextBlock x:Name="tb_teamOne" HorizontalAlignment="Left" Margin="211,53,0,0" TextWrapping="Wrap" Text="First team" TextAlignment="Center" VerticalAlignment="Top" Height="28" Width="104" FontSize="16"/>
+        <TextBlock x:Name="tb_teamTwo" HorizontalAlignment="Left" Margin="445,53,0,0" TextWrapping="Wrap" Text="Second team" TextAlignment="Center" VerticalAlignment="Top" Height="28" Width="104" FontSize="16"/>
+        <ListBox x:Name="lb_firstTeam" d:ItemsSource="{d:SampleData ItemCount=6}" Margin="179,96,453,225"  HorizontalContentAlignment="Center"/>
+        <ListBox x:Name="lb_secondTeam" d:ItemsSource="{d:SampleData ItemCount=6}" Margin="413,96,219,225"  HorizontalContentAlignment="Center"/>
+        <Button x:Name="btn_autoGeneration" Content="Auto generation" HorizontalAlignment="Left" Margin="667,66,0,0" VerticalAlignment="Top" Height="35" Width="97" Click="btn_autoGeneration_Click"/>
     </Grid>
 </Page>
