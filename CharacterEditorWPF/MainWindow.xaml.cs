@@ -1,6 +1,5 @@
 ﻿using CharacterEditorCore;
 using CharacterEditorCore.Abilities;
-using CharacterEditorCore.Equipments;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;

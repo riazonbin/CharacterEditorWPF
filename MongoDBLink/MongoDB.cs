@@ -1,5 +1,4 @@
 ﻿using CharacterEditorCore;
-using CharacterEditorCore.Equipments;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;

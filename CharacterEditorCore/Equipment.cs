@@ -6,12 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharacterEditorCore.Equipments
+namespace CharacterEditorCore
 {
-    [BsonKnownTypes(typeof(GoldenSword), typeof(WoodenSword), 
-        typeof(DiamondSword), typeof(DragonHelmet), typeof(LeatherHelmet),
-        typeof(SteelHelmet), typeof(DragonBreastplate), typeof(SteelBreastplate),
-        typeof(WoodenBreastplate)) ]
     public class Equipment
     {
         [BsonId]
@@ -55,7 +51,7 @@ namespace CharacterEditorCore.Equipments
         }
         public override bool Equals(object? obj)
         {
-            return this.EquipmentName == (obj as Equipment).EquipmentName;
+            return EquipmentName == (obj as Equipment).EquipmentName;
         }
     }
 }
