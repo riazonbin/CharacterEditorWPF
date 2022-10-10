@@ -9,6 +9,7 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace CharacterEditorWPF
 {
@@ -628,6 +629,11 @@ namespace CharacterEditorWPF
             {
                 currentCharacter.IncreaseStats(equip);
             }
+        }
+
+        private void btn_Match_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationFrame.Navigate(new MatchPage());
         }
     }
 }

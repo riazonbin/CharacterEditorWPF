@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="MainWindow.xaml.cs~RF19b357e3.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CharacterEditorCore\CharacterEditorCore.csproj" />
     <ProjectReference Include="..\MongoDBLink\MongoDBLink.csproj" />
   </ItemGroup>

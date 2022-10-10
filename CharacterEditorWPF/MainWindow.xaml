@@ -81,5 +81,12 @@
         <Button x:Name="btn_removeEquipment" Content="Remove equipment" HorizontalAlignment="Left" Margin="548,323,0,0" VerticalAlignment="Top" Width="114" Click="btn_removeEquipment_Click"/>
         <TextBlock x:Name="textblock_charactersEquipment" HorizontalAlignment="Left" Margin="548,256,0,0" TextWrapping="Wrap" Text="Character's equipment" VerticalAlignment="Top" RenderTransformOrigin="0.385,-0.311"/>
         <TextBlock x:Name="textblock_possibleEquipment" HorizontalAlignment="Left" Margin="391,256,0,0" TextWrapping="Wrap" Text="Possible equipment" VerticalAlignment="Top" RenderTransformOrigin="0.385,-0.311"/>
+        <Button x:Name="btn_Match" Content="MATCH!" HorizontalAlignment="Left" Margin="678,75,0,0" VerticalAlignment="Top" Height="48" Width="96" Click="btn_Match_Click"/>
+
+        <DockPanel>
+            <Frame x:Name="NavigationFrame" Width="800" NavigationUIVisibility="Hidden"/>
+        </DockPanel>
+        
     </Grid>
+    
 </Window>
