@@ -17,7 +17,7 @@ namespace CharacterEditorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Character currentCharacter;
+        public Character? currentCharacter;
         public bool isInitializing;
         public bool isCharacterSelected;
         public bool isClearingData;

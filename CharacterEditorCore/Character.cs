@@ -15,7 +15,7 @@ namespace CharacterEditorCore
 {
     public class Character
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public Level Level = new Level();
 
@@ -23,7 +23,7 @@ namespace CharacterEditorCore
 
         public ObservableCollection<Equipment> charactersEquipment = new ObservableCollection<Equipment>();
 
-        private void EquipmentChanged(object sender, NotifyCollectionChangedEventArgs ea)
+        private void EquipmentChanged(object? sender, NotifyCollectionChangedEventArgs ea)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace CharacterEditorCore
 
         public ObjectId _id;
 
-        public string typeOfCharacter;
+        public string? typeOfCharacter;
 
         [BsonIgnoreIfDefault]
         public List<Item> inventory = new List<Item>();

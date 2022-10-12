@@ -23,9 +23,11 @@ namespace CharacterEditorWPF
     /// </summary>
     public partial class MatchPage : Page
     {
-        public int firstTeamCount = 0;
-        public int secondTeamCount = 0;
         public const int maxTeamSize = 6;
+        public const double maxLevelDifference = 1.5;
+        public bool isBalanced = false;
+        private int _balanceCount = 0;
+        public const int maxBalanceIterationCount = 10;
 
         public MatchPage()
         {
@@ -39,48 +41,183 @@ namespace CharacterEditorWPF
 
         private void btn_autoGeneration_Click(object sender, RoutedEventArgs e)
         {
-            if(firstTeamCount == maxTeamSize && secondTeamCount == maxTeamSize)
+            AutoGenerate();
+            ColorBalanceLabel();
+        }
+
+        private void AutoGenerate()
+        {
+
+            if (lb_firstTeam.Items.Count == maxTeamSize && lb_secondTeam.Items.Count == maxTeamSize)
             {
-                firstTeamCount = 0;
-                secondTeamCount = 0;
+                FillExistingCharacters();
                 lb_firstTeam.Items.Clear();
                 lb_secondTeam.Items.Clear();
             }
 
 
             Random random = new Random();
-            var collection = (MongoDBLink.MongoDB.GetCollection()).Find(new BsonDocument()).ToList();
+            var collection = GetCharactersFromComboBox();
 
-            while (firstTeamCount != maxTeamSize)
+            while (lb_firstTeam.Items.Count != maxTeamSize)
             {
-                firstTeamCount++;
+                CharacterInfo randomCharacter = GetRandomCharacterFromList(collection);
 
-
-                var randomCharacter = GetRandomCharacterFromList(collection);
-
-                lb_firstTeam.Items.Add(new CharacterInfo(randomCharacter._id, randomCharacter.Name));
+                lb_firstTeam.Items.Add(new CharacterInfo(ObjectId.Parse(randomCharacter.Id), randomCharacter.Name, randomCharacter.Level));
 
                 collection.Remove(randomCharacter);
+                cb_existingCharacters.Items.Remove(randomCharacter);
             }
 
-            while (secondTeamCount != maxTeamSize)
+            while (lb_secondTeam.Items.Count != maxTeamSize)
             {
+                CharacterInfo randomCharacter = GetRandomCharacterFromList(collection);
 
-                var randomCharacter = GetRandomCharacterFromList(collection);
-
-                secondTeamCount++;
-
-                lb_secondTeam.Items.Add(new CharacterInfo(randomCharacter._id, randomCharacter.Name));
+                lb_secondTeam.Items.Add(new CharacterInfo(ObjectId.Parse(randomCharacter.Id), randomCharacter.Name, randomCharacter.Level));
 
                 collection.Remove(randomCharacter);
+                cb_existingCharacters.Items.Remove(randomCharacter);
+            }
+
+            if (!CheckBalance())
+            {
+                _balanceCount++;
+                AutoGenerate();
+            }
+            else
+            {
+                _balanceCount = 0;
+            }
+
+            if(_balanceCount > maxBalanceIterationCount)
+            {
+                MessageBox.Show("There is no possible balanced match");
             }
         }
 
-        private Character GetRandomCharacterFromList(List<Character> collection)
+        private void ColorBalanceLabel()
+        {
+            if(isBalanced)
+            {
+                lb_Balance.Content = "BALANCED";
+                lb_Balance.Background = new BrushConverter().ConvertFromString("Green") as Brush;
+            }
+            else
+            {
+                lb_Balance.Content = "UNBALANCED";
+                lb_Balance.Background = new BrushConverter().ConvertFromString("Red") as Brush;
+            }
+        }
+
+        private CharacterInfo GetRandomCharacterFromList(List<CharacterInfo> collection)
         {
             Random random = new Random();
 
             return collection[random.Next(0, collection.Count)];
+        }
+
+        private bool CheckBalance()
+        {
+            var firstTeamAvgLvl = GetAverageLevelOnTeam(lb_firstTeam);
+            var secondTeamAvgLvl = GetAverageLevelOnTeam(lb_secondTeam);
+
+            if(Math.Abs(firstTeamAvgLvl - secondTeamAvgLvl) >= maxLevelDifference)
+            {
+                return isBalanced = false;
+            }
+            return isBalanced = true;
+        }
+
+        private double GetAverageLevelOnTeam(ListBox characters)
+        {
+            double averageLevel = 0;
+
+            foreach (CharacterInfo character in characters.Items)
+            {
+                averageLevel += character.Level;
+            }
+
+            return averageLevel / maxTeamSize;
+        }
+
+        private void lb_firstTeam_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                var selectedCharacter = lb_firstTeam.SelectedItem;
+                lb_firstTeam.Items.Remove(selectedCharacter);
+                cb_existingCharacters.Items.Add(selectedCharacter);
+
+                CheckBalance();
+                ColorBalanceLabel();
+            }
+        }
+
+        private void lb_secondTeam_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                var selectedCharacter = lb_secondTeam.SelectedItem;
+                lb_secondTeam.Items.Remove(lb_secondTeam.SelectedItem);
+                cb_existingCharacters.Items.Add(selectedCharacter);
+                CheckBalance();
+                ColorBalanceLabel();
+            }
+        }
+
+        private void page_MatchPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            FillExistingCharacters();
+        }
+
+        private void FillExistingCharacters()
+        {
+            var collection = (MongoDBLink.MongoDB.GetCollection()).Find(new BsonDocument()).ToList();
+            cb_existingCharacters.Items.Clear();
+
+            foreach(var character in collection)
+            {
+                cb_existingCharacters.Items.Add(new CharacterInfo(character._id, character.Name, character.Level.CurrentLevel));
+            }
+        }
+
+        private List<CharacterInfo> GetCharactersFromComboBox()
+        {
+            List<CharacterInfo> characters = new List<CharacterInfo>();
+
+            foreach(CharacterInfo character in cb_existingCharacters.Items)
+            {
+                characters.Add(character);
+            }
+
+            return characters;
+        }
+
+        private void btn_addToFirstTeam_Click(object sender, RoutedEventArgs e)
+        {
+            if(lb_firstTeam.Items.Count == maxTeamSize)
+            {
+                return;
+            }
+            var selectedCharacter = cb_existingCharacters.SelectedItem;
+            lb_firstTeam.Items.Add(selectedCharacter);
+            CheckBalance();
+            ColorBalanceLabel();
+            cb_existingCharacters.Items.Remove(selectedCharacter);
+
+        }
+
+        private void btn_addToSecondTeam_Click(object sender, RoutedEventArgs e)
+        {
+            if (lb_secondTeam.Items.Count == maxTeamSize)
+            {
+                return;
+            }
+            var selectedCharacter = cb_existingCharacters.SelectedItem;
+            lb_secondTeam.Items.Add(selectedCharacter);
+            CheckBalance();
+            ColorBalanceLabel();
+            cb_existingCharacters.Items.Remove(selectedCharacter);
         }
     }
 }

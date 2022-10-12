@@ -200,7 +200,7 @@ namespace CharacterEditorWPF
                 {
                     foreach (var doc in cursor.ToList())
                     {
-                        cb_createdCharacters.Items.Add(new CharacterInfo(doc._id, doc.Name));
+                        cb_createdCharacters.Items.Add(new CharacterInfo(doc._id, doc.Name, doc.Level.CurrentLevel));
                     }
                 }
             }
