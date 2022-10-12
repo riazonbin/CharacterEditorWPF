@@ -19,6 +19,14 @@ namespace MongoDBLink
             collection.InsertOne(character);
         }
 
+        public static void AddMatchToDataBase(MatchInfo match)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CharacterEditorZaripov");
+            var collection = database.GetCollection<MatchInfo>("MatchesCollection");
+            collection.InsertOne(match);
+        }
+
         public static void ReplaceOneInDataBase(Character character)
         {
             var client = new MongoClient("mongodb://localhost");

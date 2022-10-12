@@ -14,9 +14,11 @@
         <ListBox x:Name="lb_firstTeam" d:ItemsSource="{d:SampleData ItemCount=6}" Margin="242,96,390,290"  HorizontalContentAlignment="Center" KeyDown="lb_firstTeam_KeyDown"/>
         <ListBox x:Name="lb_secondTeam" d:ItemsSource="{d:SampleData ItemCount=6}" Margin="476,96,156,290"  HorizontalContentAlignment="Center" KeyDown="lb_secondTeam_KeyDown"/>
         <Button x:Name="btn_autoGeneration" Content="Auto generation" HorizontalAlignment="Left" Margin="667,106,0,0" VerticalAlignment="Top" Height="35" Width="97" Click="btn_autoGeneration_Click"/>
-        <Label x:Name="lb_Balance" Content="BALANCE" HorizontalAlignment="Left" Margin="560,401,0,0" VerticalAlignment="Top" FontSize="20" BorderThickness="1" BorderBrush="Black"/>
+        <Label x:Name="lb_Balance" Content="BALANCE" HorizontalAlignment="Left" Margin="512,401,0,0" VerticalAlignment="Top" FontSize="20" BorderThickness="1" BorderBrush="Black"/>
         <ComboBox x:Name="cb_existingCharacters" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btn_addToFirstTeam" Content="Add to 1st team" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Height="37" Width="95" Click="btn_addToFirstTeam_Click"/>
         <Button x:Name="btn_addToSecondTeam" Content="Add to 2nd team" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Height="37" Width="95" Click="btn_addToSecondTeam_Click"/>
+        <Button x:Name="btn_startMatch" Content="Start Match!" HorizontalAlignment="Left" Margin="667,401,0,0" VerticalAlignment="Top" Height="39" Width="123" Click="btn_startMatch_Click"/>
+        <Button x:Name="btn_GoBack" Content="Go back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="btn_GoBack_Click"/>
     </Grid>
 </Page>

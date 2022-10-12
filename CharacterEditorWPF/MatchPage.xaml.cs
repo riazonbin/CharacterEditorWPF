@@ -57,7 +57,7 @@ namespace CharacterEditorWPF
 
 
             Random random = new Random();
-            var collection = GetCharactersFromComboBox();
+            var collection = GetCharactersFromComboBox(cb_existingCharacters);
 
             while (lb_firstTeam.Items.Count != maxTeamSize)
             {
@@ -181,17 +181,30 @@ namespace CharacterEditorWPF
             }
         }
 
-        private List<CharacterInfo> GetCharactersFromComboBox()
+        private List<CharacterInfo> GetCharactersFromComboBox(ComboBox combobox)
         {
             List<CharacterInfo> characters = new List<CharacterInfo>();
 
-            foreach(CharacterInfo character in cb_existingCharacters.Items)
+            foreach(CharacterInfo character in combobox.Items)
             {
                 characters.Add(character);
             }
 
             return characters;
         }
+
+        private List<CharacterInfo> GetCharactersFromListBox(ListBox listbox)
+        {
+            List<CharacterInfo> characters = new List<CharacterInfo>();
+
+            foreach (CharacterInfo character in listbox.Items)
+            {
+                characters.Add(character);
+            }
+
+            return characters;
+        }
+
 
         private void btn_addToFirstTeam_Click(object sender, RoutedEventArgs e)
         {
@@ -218,6 +231,23 @@ namespace CharacterEditorWPF
             CheckBalance();
             ColorBalanceLabel();
             cb_existingCharacters.Items.Remove(selectedCharacter);
+        }
+
+        private void btn_startMatch_Click(object sender, RoutedEventArgs e)
+        {
+            if(!isBalanced)
+            {
+                return;
+            }
+            MatchInfo newMatch = new MatchInfo(GetCharactersFromListBox(lb_firstTeam),
+                GetCharactersFromListBox(lb_secondTeam));
+
+            MongoDBLink.MongoDB.AddMatchToDataBase(newMatch);
+        }
+
+        private void btn_GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
