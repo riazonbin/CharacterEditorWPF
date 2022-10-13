@@ -121,6 +121,11 @@ namespace CharacterEditorWPF
             var firstTeamAvgLvl = GetAverageLevelOnTeam(lb_firstTeam);
             var secondTeamAvgLvl = GetAverageLevelOnTeam(lb_secondTeam);
 
+            if(firstTeamAvgLvl == 0 || secondTeamAvgLvl == 0)
+            {
+                return isBalanced = false;
+            }
+
             if(Math.Abs(firstTeamAvgLvl - secondTeamAvgLvl) >= maxLevelDifference)
             {
                 return isBalanced = false;
@@ -248,6 +253,20 @@ namespace CharacterEditorWPF
         private void btn_GoBack_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void btn_clearTeams_Click(object sender, RoutedEventArgs e)
+        {
+            lb_firstTeam.Items.Clear();
+            lb_secondTeam.Items.Clear();
+            FillExistingCharacters();
+            ClearBalanceLabel();
+        }
+
+        private void ClearBalanceLabel()
+        {
+            lb_Balance.Content = "BALANCE";
+            lb_Balance.Background = new BrushConverter().ConvertFromString("White") as Brush;
         }
     }
 }

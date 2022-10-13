@@ -20,5 +20,6 @@
         <Button x:Name="btn_addToSecondTeam" Content="Add to 2nd team" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Height="37" Width="95" Click="btn_addToSecondTeam_Click"/>
         <Button x:Name="btn_startMatch" Content="Start Match!" HorizontalAlignment="Left" Margin="667,401,0,0" VerticalAlignment="Top" Height="39" Width="123" Click="btn_startMatch_Click"/>
         <Button x:Name="btn_GoBack" Content="Go back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="btn_GoBack_Click"/>
+        <Button x:Name="btn_clearTeams" Content="Clear" HorizontalAlignment="Left" Margin="667,166,0,0" VerticalAlignment="Top" Height="32" Width="97" Click="btn_clearTeams_Click"/>
     </Grid>
 </Page>
