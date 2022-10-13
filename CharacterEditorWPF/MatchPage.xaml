@@ -21,5 +21,8 @@
         <Button x:Name="btn_startMatch" Content="Start Match!" HorizontalAlignment="Left" Margin="667,401,0,0" VerticalAlignment="Top" Height="39" Width="123" Click="btn_startMatch_Click"/>
         <Button x:Name="btn_GoBack" Content="Go back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="btn_GoBack_Click"/>
         <Button x:Name="btn_clearTeams" Content="Clear" HorizontalAlignment="Left" Margin="667,166,0,0" VerticalAlignment="Top" Height="32" Width="97" Click="btn_clearTeams_Click"/>
+        <TextBlock x:Name="tb_existingCharacters" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Characters" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cb_existingMatches" HorizontalAlignment="Left" Margin="10,293,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cb_existingMatches_SelectionChanged"/>
+        <TextBlock x:Name="tb_existingMatches" HorizontalAlignment="Left" Margin="10,272,0,0" TextWrapping="Wrap" Text="Existing matches" VerticalAlignment="Top"/>
     </Grid>
 </Page>

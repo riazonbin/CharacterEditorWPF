@@ -66,6 +66,23 @@ namespace MongoDBLink
             return  database.GetCollection<Character>("CharactersCollection");
         }
 
+        public static IMongoCollection<MatchInfo> GetMatchesCollection()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CharacterEditorZaripov");
+
+            return database.GetCollection<MatchInfo>("MatchesCollection");
+        }
+
+        public static Character FindMatchById(string id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var filter = Builders<Character>.Filter.Eq("_id", ObjectId.Parse(id));
+            var database = client.GetDatabase("CharacterEditorZaripov");
+            var collection = database.GetCollection<Character>("CharactersCollection");
+            return collection.Find(filter).FirstOrDefault();
+        }
+
         public static void UpdateCharacter(Character character)
         {
             var client = new MongoClient("mongodb://localhost");

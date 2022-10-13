@@ -13,6 +13,7 @@ namespace CharacterEditorCore
         [BsonId]
         public ObjectId Id { get; set; }
 
+        [BsonDateTimeOptions(Kind =DateTimeKind.Local)]
         public DateTime MatchTime { get; set; }
 
         public List<CharacterInfo>? FirstTeam {get; set;}
@@ -24,6 +25,11 @@ namespace CharacterEditorCore
             FirstTeam = firstTeam;
             SecondTeam = secondTeam;
             MatchTime = DateTime.Now;
+        }
+
+        public override string ToString()
+        {
+            return $"{MatchTime}";
         }
     }
 }

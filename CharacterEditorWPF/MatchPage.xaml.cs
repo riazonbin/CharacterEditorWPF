@@ -34,11 +34,6 @@ namespace CharacterEditorWPF
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
-
         private void btn_autoGeneration_Click(object sender, RoutedEventArgs e)
         {
             AutoGenerate();
@@ -168,7 +163,7 @@ namespace CharacterEditorWPF
 
         private void lb_firstTeam_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Delete)
+            if (e.Key == Key.Delete)
             {
                 var selectedCharacter = lb_firstTeam.SelectedItem;
                 lb_firstTeam.Items.Remove(selectedCharacter);
@@ -176,6 +171,12 @@ namespace CharacterEditorWPF
 
                 CheckBalance();
                 ColorBalanceLabel();
+            }
+            if (e.Key == Key.Enter)
+            {
+                MatchCharacterInfo infoWindow = new MatchCharacterInfo(lb_firstTeam.SelectedItem as CharacterInfo);
+                infoWindow.Show();
+
             }
         }
 
@@ -189,11 +190,30 @@ namespace CharacterEditorWPF
                 CheckBalance();
                 ColorBalanceLabel();
             }
+            if (e.Key == Key.Enter)
+            {
+                MatchCharacterInfo infoWindow = new MatchCharacterInfo(lb_secondTeam.SelectedItem as CharacterInfo);
+                infoWindow.Show();
+
+            }
         }
 
         private void page_MatchPage_Loaded(object sender, RoutedEventArgs e)
         {
             FillExistingCharacters();
+            FillExistingMatches();
+            FillExistingMatches();
+        }
+
+        private void FillExistingMatches()
+        {
+            var matches = MongoDBLink.MongoDB.GetMatchesCollection().Find(new BsonDocument()).ToList();
+            cb_existingMatches.Items.Clear();
+
+            foreach (var match in matches)
+            {
+                cb_existingMatches.Items.Add(match);
+            }
         }
 
         private void FillExistingCharacters()
@@ -279,6 +299,7 @@ namespace CharacterEditorWPF
                 GetCharactersFromListBox(lb_secondTeam));
 
             MongoDBLink.MongoDB.AddMatchToDataBase(newMatch);
+            ClearAll();
         }
 
         private void btn_GoBack_Click(object sender, RoutedEventArgs e)
@@ -287,6 +308,11 @@ namespace CharacterEditorWPF
         }
 
         private void btn_clearTeams_Click(object sender, RoutedEventArgs e)
+        {
+            ClearAll();
+        }
+
+        private void ClearAll()
         {
             lb_firstTeam.Items.Clear();
             lb_secondTeam.Items.Clear();
@@ -298,6 +324,32 @@ namespace CharacterEditorWPF
         {
             lb_Balance.Content = "BALANCE";
             lb_Balance.Background = new BrushConverter().ConvertFromString("White") as Brush;
+        }
+
+        private void cb_existingMatches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cb_existingMatches.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var currentMatch = cb_existingMatches.SelectedItem as MatchInfo;
+            FillTeams(currentMatch);
+            CheckBalance();
+            ColorBalanceLabel();
+        }
+
+        private void FillTeams(MatchInfo match)
+        {
+            foreach(var character in match.FirstTeam)
+            {
+                lb_firstTeam.Items.Add(character);
+            }
+
+            foreach (var character in match.SecondTeam)
+            {
+                lb_secondTeam.Items.Add(character);
+            }
         }
     }
 }
