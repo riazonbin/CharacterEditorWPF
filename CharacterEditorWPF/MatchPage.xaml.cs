@@ -202,7 +202,6 @@ namespace CharacterEditorWPF
         {
             FillExistingCharacters();
             FillExistingMatches();
-            FillExistingMatches();
         }
 
         private void FillExistingMatches()
@@ -300,6 +299,9 @@ namespace CharacterEditorWPF
 
             MongoDBLink.MongoDB.AddMatchToDataBase(newMatch);
             ClearAll();
+
+            FillExistingMatches();
+            FillExistingCharacters();
         }
 
         private void btn_GoBack_Click(object sender, RoutedEventArgs e)
@@ -334,6 +336,7 @@ namespace CharacterEditorWPF
             }
 
             var currentMatch = cb_existingMatches.SelectedItem as MatchInfo;
+            ClearAll();
             FillTeams(currentMatch);
             CheckBalance();
             ColorBalanceLabel();
