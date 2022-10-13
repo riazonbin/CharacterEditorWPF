@@ -118,22 +118,31 @@ namespace CharacterEditorWPF
 
         private bool CheckBalance()
         {
-            var firstTeamAvgLvl = GetAverageLevelOnTeam(lb_firstTeam);
-            var secondTeamAvgLvl = GetAverageLevelOnTeam(lb_secondTeam);
+            var firstTeamAvgLvl = GetAverageLevelOnTeamFirstMethod(lb_firstTeam);
+            var secondTeamAvgLvl = GetAverageLevelOnTeamFirstMethod(lb_secondTeam);
 
             if(firstTeamAvgLvl == 0 || secondTeamAvgLvl == 0)
             {
                 return isBalanced = false;
             }
 
-            if(Math.Abs(firstTeamAvgLvl - secondTeamAvgLvl) >= maxLevelDifference)
+            if (Math.Abs(firstTeamAvgLvl - secondTeamAvgLvl) >= maxLevelDifference)
             {
                 return isBalanced = false;
             }
+
+            firstTeamAvgLvl = GetAverageLevelOnTeamSecondMethod(lb_firstTeam);
+            secondTeamAvgLvl = GetAverageLevelOnTeamSecondMethod(lb_secondTeam);
+
+            if (Math.Abs(firstTeamAvgLvl - secondTeamAvgLvl) >= maxLevelDifference)
+            {
+                return isBalanced = false;
+            }
+
             return isBalanced = true;
         }
 
-        private double GetAverageLevelOnTeam(ListBox characters)
+        private double GetAverageLevelOnTeamFirstMethod(ListBox characters)
         {
             double averageLevel = 0;
 
@@ -143,6 +152,18 @@ namespace CharacterEditorWPF
             }
 
             return averageLevel / maxTeamSize;
+        }
+
+        private double GetAverageLevelOnTeamSecondMethod(ListBox characters)
+        {
+            double averageLevel = 0;
+
+            foreach (CharacterInfo character in characters.Items)
+            {
+                averageLevel += character.Level;
+            }
+
+            return averageLevel / characters.Items.Count;
         }
 
         private void lb_firstTeam_KeyDown(object sender, KeyEventArgs e)
@@ -213,6 +234,11 @@ namespace CharacterEditorWPF
 
         private void btn_addToFirstTeam_Click(object sender, RoutedEventArgs e)
         {
+            if(cb_existingCharacters.SelectedItem is null)
+            {
+                return;
+            }
+
             if(lb_firstTeam.Items.Count == maxTeamSize)
             {
                 return;
@@ -227,6 +253,11 @@ namespace CharacterEditorWPF
 
         private void btn_addToSecondTeam_Click(object sender, RoutedEventArgs e)
         {
+            if (cb_existingCharacters.SelectedItem is null)
+            {
+                return;
+            }
+
             if (lb_secondTeam.Items.Count == maxTeamSize)
             {
                 return;
