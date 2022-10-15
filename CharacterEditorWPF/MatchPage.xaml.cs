@@ -344,7 +344,9 @@ namespace CharacterEditorWPF
 
         private void FillTeams(MatchInfo match)
         {
-            foreach(var character in match.FirstTeam)
+            cb_existingCharacters.Items.Clear();
+
+            foreach (var character in match.FirstTeam)
             {
                 lb_firstTeam.Items.Add(character);
             }
